@@ -231,5 +231,7 @@ int main(){
 
     // cout << b.getName() << endl;
 
+    // p.subMaintenance(100);
+
     game.openMenu(p);
 }

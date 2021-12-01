@@ -886,7 +886,12 @@ void Game::openMenu(Player p){
         }
         case 2:{ // fight a hacker
             Hacker temp = getHacker(room);
-            p.fightHacker(temp);
+            bool result = p.fightHacker(temp);
+            if(result == false || result == true){
+                if(p.getMaintenance() <=0){
+                    cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
+                }
+            }
             break;
         }
         case 3:{ //speak to NPC

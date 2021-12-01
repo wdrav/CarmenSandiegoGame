@@ -354,9 +354,6 @@ bool Player::fightHacker(Hacker h){
 
     }else{
         cout << "OH NO! You have lost the battle with " << h.getName() << endl;
-        cout << "Because of this, your computer maintenance has dropped 20!" << endl << endl;
-        subMaintenance(20);
-
         int chanceVirus = rand() % 10;
 
         if(chanceVirus == 0){
@@ -369,6 +366,15 @@ bool Player::fightHacker(Hacker h){
 
         return false;
         
+    }
+    int chanceLoseMaintenance = rand() % 10;
+    if(chanceLoseMaintenance <= 2){
+        maintenanceLevel -= 10;
+        cout << "The battle took a lot out of your computer. Because of this, your maintenance has dropped 10 points." << endl;
+        if(maintenanceLevel <= 0){
+            cout << "By dropping 10 points, you have dropped to zero, and lost the game. Better luck next time!" << endl;
+            
+        }
     }
  
     return true;
