@@ -51,7 +51,7 @@ This code works perfectly except for one pesky bug. Enter the number of the line
 15.          cout << "Line " << lineNum << ": " << line << endl;
 16.       }
 17.   }else{
-18.          cout << ÒFailed to open file.Ó << endl;
+18.          cout << ï¿½Failed to open file.ï¿½ << endl;
 19.   }
 20.   return 0; 
 21. }
@@ -98,4 +98,57 @@ A) iofstream
 B) ofstream
 C) ifstream
 D) fstream
+
+
+---
+****MULTIPLE CHOICE****
+You're trying to take in a user's full name, what should you use to store it in one string named name?
+
+A) cin >> name;
+B) name = nextString();
+C) getline(stream, name);
+D) getString(name);
+
+
+---
+****MULTIPLE CHOICE****
+What month of the year has 28 days?
+
+A) February
+B) All of them
+
+---
+****MULTIPLE CHOICE****
+Davidâ€™s parents have three sons: Snap, Crackle, and whatâ€™s the name of the third son?
+
+A) Pop
+B) Snap
+C) David
+
+---
+****MULTIPLE CHOICE****
+How many times does this program print out the line?
+
+void printLine(){
+	for(int i = 0; i < 10; i++){
+		if(i % 2 == 0 || i % 3 == 0){
+			cout << "What gets bigger when more is taken away? A hole." << endl;
+		}
+	}
+
+}
+
+A) 6
+B) 5
+C) 7
+D) 4
+
+---
+****MULTIPLE CHOICE****
+What does the operator % do?
+
+A) returns how many times a number goes into another number
+B) returns the remainder
+C) Looks cool
+D) I don't know
 
