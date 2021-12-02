@@ -43,7 +43,7 @@ class Game {
         void repairComputer(Player p);
         void nextTurn(Map m, Player p, Npc n, Store s);
         void travelRoom(Map m, Player p, Npc n, Store s);
-        void newRoom(Map m, Player p);
+        void newRoom(Map &m, Player p);
 
 
         //setters

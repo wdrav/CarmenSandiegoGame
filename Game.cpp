@@ -20,7 +20,7 @@ Game::Game(){
     puzzleNum = 0;
     numMoves = 0;
     count = 0;
-    room = 1;
+    room = 0;
 }
 
 void Game::setProgress(int p){
@@ -853,65 +853,61 @@ Hacker Game::getHacker(int rn){
 
 }
 
-void Game::newRoom(Map m, Player p){
+void Game::newRoom(Map &m, Player p){
     room++;
     if(room == 6){
         cout << "Nice job! You finished the game!" << endl;
         endGame(p);
         return;
     }
+    srand(time(NULL));
 
     m.resetMap();
+
     int numberHackers = rand() % 3 + 1; //1,2,3
-    m.setHackerCount(numberHackers);
-    bool running = true;
+    int numberNPC = rand() % 3 + 1;
+
+    int bestBuyCol = rand() % 9;
+    int bestBuyRow = rand() % 5;
+
+    bool a = m.spawnBestBuy(bestBuyRow, bestBuyCol);
+
+    if(a == false){
+        m.spawnBestBuy(bestBuyRow, bestBuyCol);
+    }
+
+    for(int i = 0; i < numberNPC; i++){
+        int row = rand() % 9;
+        int col = rand() % 5;
+
+        bool a = m.spawnNPC(row, col);
+
+        if(a == false){
+            numberNPC++;
+        }
+    }
+
     for(int i = 0; i < numberHackers; i++){
-        while(running){
-            int rows = rand() % 5; //0-4
-            int col = rand() % 9;  //0 - 8
-            if(m.isHackerLocation()){
-                continue;
-            }else{
-                m.spawnHacker(rows, col);
-                running = false;
-            }
+        int row = rand() % 9;
+        int col = rand() % 5;
+
+        bool a = m.spawnHacker(row, col);
+
+        if(row == bestBuyRow && col == bestBuyCol){
+            numberHackers++;
         }
+
+        if(a == false){
+            numberHackers++;
+        }
+
     }
 
-    int numberNpcs = rand() % 3 + 1;
-    m.setNPCCount(numberNpcs);
-    running = true;
-    for(int i = 0; i < numberNpcs; i++){
-        while(running){
-            int rows = rand() % 5; //0-4
-            int col = rand() % 9;  //0 - 8 
-            if(m.isHackerLocation()){
-                continue;
-            }else if(m.isNPCLocation()){
-                continue;
-            }else{
-                m.spawnNPC(rows, col);
-                running = false;
-            }
-        }
-    }
-
-    running = true;
-    while(running){
-        int rows = rand() % 5; //0-4
-        int col = rand() % 9;  //0 - 8
-        if(m.isHackerLocation()){
-            continue;
-        }else if(m.isNPCLocation()){
-            continue;
-        }else{
-            m.spawnBestBuy(rows, col);
-            running = false;
-        }
-            
-    }
 
     turn = 0;
+
+    m.displayMap();
+
     p.resetHackersDefeated();
     
 }
@@ -932,7 +928,7 @@ void Game::nextTurn(Map m, Player p, Npc n, Store s){
             endGame(p);
             return;
         }else{
-            //nextRoom implementation
+            newRoom(m, p);
         }
 
     }

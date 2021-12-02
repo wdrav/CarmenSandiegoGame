@@ -201,7 +201,7 @@ int main(){
 
     // game.browseStackOverFlow(p);
 
-    p.addNumUSBstick(1);
+    // p.addNumUSBstick(1);
 
     // game.useAntivirus(p);
 
@@ -229,6 +229,11 @@ int main(){
 
     game.setHackers("hackers.txt");
     game.newRoom(m, p);
+    // m.displayMap();
+    cout << "number of hackers: " << m.getHackerCount() << endl;
+    cout << "number of npcs: " << m.getNPCCount() << endl;
+    // game.openMenu(m, p, tony, s);
+
 
     // Hacker b = game.getHacker(2);
 
@@ -236,5 +241,5 @@ int main(){
 
     // p.subMaintenance(100);
 
-    game.openMenu(m, p, tony, s);
+    // game.openMenu(m, p, tony, s);
 }

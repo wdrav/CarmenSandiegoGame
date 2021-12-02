@@ -261,7 +261,7 @@ void Map::displayMap() {
             if (playerPosition[0] == i && playerPosition[1] == j) {
                 cout << "x";
             } else if (mapData[i][j] == 'H') {  // don't show hacker on the map
-                cout << "-";
+                 cout << "H";
             }
             else {
                 cout << mapData[i][j];
