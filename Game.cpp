@@ -356,6 +356,7 @@ void Game::misfortune(Player p){
             if(p.getMaintenance() <= 0){
                 cout << "You maintenance level is too low to continue! You lose!" << endl;
                 endGame(p);
+                return;
             }
             
         }else if(i == 2){
@@ -366,6 +367,7 @@ void Game::misfortune(Player p){
                 cout << "OH NO! You have rage quit!" << endl;
                 cout << "Looks like you couldn't handle Carmen's hackers." << endl;
                 endGame(p);
+                return;
             }
         }
     }
@@ -928,6 +930,7 @@ void Game::nextTurn(Map m, Player p, Npc n, Store s){
             cout << "You haven't defeated any hackers!!" << endl;
             cout << "You lose!" << endl;
             endGame(p);
+            return;
         }else{
             //nextRoom implementation
         }
@@ -952,6 +955,7 @@ void Game::travelRoom(Map m, Player p, Npc n, Store s){
         p.setFrustration(frustration);
         if(p.getFrustration() >= 100){
             endGame(p);
+            return;
         }
         misfortune(p);
         if(m.isHackerLocation()){
@@ -961,12 +965,14 @@ void Game::travelRoom(Map m, Player p, Npc n, Store s){
             if(p.getMaintenance() <=0){
                     cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
                     endGame(p);
+                    return;
                 }
             if(result == false){
                 progressLevel += 25;
                 if(progressLevel >= 100){
                     cout << "Carment has reached her maximum progress! You have lost the game!" << endl;
                     endGame(p);
+                    return;
                 }
             }
         }
@@ -1065,6 +1071,7 @@ void Game::openMenu(Map m, Player p, Npc n, Store s){
         case 6:{ 
             cout << "You have quit the game!" << endl;
             endGame(p);
+            return;
             break;
             
         }
