@@ -228,11 +228,11 @@ int main(){
     // game.repairComputer(p);
 
     game.setHackers("hackers.txt");
-    game.newRoom(m, p);
+    game.newRoom(m, p, tony, s);
     // m.displayMap();
-    cout << "number of hackers: " << m.getHackerCount() << endl;
-    cout << "number of npcs: " << m.getNPCCount() << endl;
-    // game.openMenu(m, p, tony, s);
+    // cout << "number of hackers: " << m.getHackerCount() << endl;
+    // cout << "number of npcs: " << m.getNPCCount() << endl;
+    game.openMenu(m, p, tony, s);
 
 
     // Hacker b = game.getHacker(2);

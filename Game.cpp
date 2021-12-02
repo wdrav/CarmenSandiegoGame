@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ int Game::getMoves(){
 
 
 
-void Game::repairComputer(Player p){
+void Game::repairComputer(Player &p){
     int option;
     int numPart = 0;
     int count = 0;
@@ -200,7 +201,7 @@ void Game::repairComputer(Player p){
     }
 }
 
-void Game::displayStats(Player p){
+void Game::displayStats(Player &p){
     /* Display all of the stats of the player, the number of moves they have taken,
         the frustration, the maintenence of the computer, the dogecoins, and the parts.
     */
@@ -221,12 +222,12 @@ void Game::displayStats(Player p){
    cout << "Internet Provider Level: " << p.getIPlvl() << endl;
    cout << "Dogecoins: " << p.getDogecoin() << endl;
    cout << "Frustration level: " << p.getFrustration() << endl;
-   cout << "Progress: " << p.getProgress() << endl;
+   cout << "Carmen's progress level: " << progressLevel << endl;
    cout << "Number of hackers defeated: " << p.getHackersDefeated() << endl << endl;
 
 }
 
-void Game::misfortune(Player p){
+void Game::misfortune(Player &p){
     /*
         returns whether or not a misfortune occurs at the end of every turn
     */
@@ -373,7 +374,7 @@ void Game::misfortune(Player p){
     }
 }
 
-void Game::speakToNpc(Npc n, Player p){
+void Game::speakToNpc(Npc n, Player &p){
     /* 
         means that the player has run into an npc object on the map, and is 
         able to get a puzzle or test their luck and see if the npc object is good, 
@@ -604,7 +605,7 @@ return;
 
 }
 
-void Game::browseStackOverFlow(Player p){
+void Game::browseStackOverFlow(Player &p){
     /* 
         prompts the user to either pick a game or a puzzle to 
         reduce frustration, and then adjust the frustration of the player 
@@ -629,9 +630,9 @@ void Game::browseStackOverFlow(Player p){
                 if(answer == getAnswer()){
                     cout << "Nice! You've gotten the answer right!" << endl;
                     if(p.getFrustration() < 5){
-                        p.setFrustration(-1 * (p.getFrustration()));
+                        p.setFrustration(0);
                     }else{
-                        p.setFrustration(-5);
+                        p.setFrustration(p.getFrustration() - 5);
                     }
                     cout << "Your frustration has gone down to " << p.getFrustration() << endl;
                 }else{
@@ -785,7 +786,7 @@ void Game::setAnswers(string fileName){
     
 }
 
-void Game::useAntivirus(Player p){
+void Game::useAntivirus(Player &p){
     if(p.getVirus() == 0){
         cout << "You don't need to use antivirus" << endl;
         return;
@@ -853,8 +854,11 @@ Hacker Game::getHacker(int rn){
 
 }
 
-void Game::newRoom(Map &m, Player p){
+void Game::newRoom(Map &m, Player &p, Npc n, Store &s){
     room++;
+
+    cout << "Welcome to room " << room << endl;
+    cout << "Best of luck! You're going to need it." << endl << endl;
     if(room == 6){
         cout << "Nice job! You finished the game!" << endl;
         endGame(p);
@@ -902,22 +906,23 @@ void Game::newRoom(Map &m, Player p){
         }
 
     }
-
+    s.setPrices(room);
 
     turn = 0;
 
     m.displayMap();
 
     p.resetHackersDefeated();
+    openMenu(m, p, n, s);
     
 }
 
-void Game::nextTurn(Map m, Player p, Npc n, Store s){
+void Game::nextTurn(Map &m, Player &p, Npc n, Store s){
     turn++;
-    p.setDogecoins(5);
+    p.setDogecoins(p.getDogecoin() + 5);
     int num = 5;
     for(int i = 0; i < p.getNumGpu(); i++){
-        p.setDogecoins(5);
+        p.setDogecoins(p.getDogecoin() + 5);
         num += 5;
     }
 
@@ -928,17 +933,50 @@ void Game::nextTurn(Map m, Player p, Npc n, Store s){
             endGame(p);
             return;
         }else{
-            newRoom(m, p);
+            newRoom(m, p, n, s);
         }
 
     }
+
+    if(progressLevel >= 100){
+        cout << "You have lost because Carmen's progress is 100!" << endl;
+        endGame(p);
+        return;
+    }
+
     openMenu(m, p, n, s);
 }
 
-void Game::travelRoom(Map m, Player p, Npc n, Store s){
+void Game::travelRoom(Map &m, Player &p, Npc n, Store s){
     char move;
     bool moving = true;
     int frustration = p.getFrustration();
+
+    turn++;
+    p.setDogecoins(p.getDogecoin() + 5);
+    int num = 5;
+    for(int i = 0; i < p.getNumGpu(); i++){
+        p.setDogecoins(p.getDogecoin() + 5);
+        num += 5;
+    }
+
+    if(turn == 11){
+        if(p.getHackersDefeated() == 0){
+            cout << "You haven't defeated any hackers!!" << endl;
+            cout << "You lose!" << endl;
+            endGame(p);
+            return;
+        }else{
+            newRoom(m, p, n, s);
+        }
+
+    }
+
+    if(progressLevel >= 100){
+        cout << "You have lost because Carmen's progress is 100!" << endl;
+        endGame(p);
+        return;
+    }
 
     while(moving){
         m.displayMap();
@@ -950,6 +988,7 @@ void Game::travelRoom(Map m, Player p, Npc n, Store s){
         frustration = p.getFrustration() + 2;
         p.setFrustration(frustration);
         if(p.getFrustration() >= 100){
+            cout << "Your frustration is 100! You have lost the game!" << endl;
             endGame(p);
             return;
         }
@@ -958,6 +997,10 @@ void Game::travelRoom(Map m, Player p, Npc n, Store s){
                 // fight a hacker
             Hacker temp = getHacker(room); //add implementation to see if you landed on a spot with a hacker
             bool result = p.fightHacker(temp);
+            if(result){
+                p.addHackersDefeated(1);
+            }
+
             if(p.getMaintenance() <=0){
                     cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
                     endGame(p);
@@ -966,36 +1009,43 @@ void Game::travelRoom(Map m, Player p, Npc n, Store s){
             if(result == false){
                 progressLevel += 25;
                 if(progressLevel >= 100){
-                    cout << "Carment has reached her maximum progress! You have lost the game!" << endl;
+                    cout << "Carmen has reached her maximum progress! You have lost the game!" << endl;
                     endGame(p);
                     return;
                 }
             }
+            nextTurn(m, p, n, s);
+            return;
         }
         if(m.isNPCLocation()){
             speakToNpc(n, p);
+            nextTurn(m, p, n, s);
+            return;
         }
         if(m.isBestBuyLocation()){
             s.displayMenu(p, room);
+            nextTurn(m,p,n,s);
+            return;
         }
         //nextGame();
     }
 
 }
 
-void Game::endGame(Player p){
+void Game::endGame(Player& p){
     //produces text that congratulates the player, shows them their stats, and 
     //finishes the game.
     cout << "You've finished the game!" << endl;
     cout << "Your stats are: " << endl;
     displayStats(p);
+    exit(1);
 
     fstream stream;
     
 
 }
 
-void Game::openMenu(Map m, Player p, Npc n, Store s){
+void Game::openMenu(Map &m, Player &p, Npc &n, Store s){
     //displays the menu given to the player at the beginning of every turn.
     //switch statement inside of driver catches player response and what to do
     
@@ -1024,6 +1074,7 @@ void Game::openMenu(Map m, Player p, Npc n, Store s){
         }
         case 2:{
             travelRoom(m, p, n, s);
+            return;
             break;
 
 
@@ -1049,19 +1100,23 @@ void Game::openMenu(Map m, Player p, Npc n, Store s){
             }
             else{
                 repairComputer(p);
+                
             }
             break;
             nextTurn(m, p, n, s);
+            return;
             break;
         }
         case 4:{ 
             useAntivirus(p);
             nextTurn(m, p, n, s);
+            return;
             break;
         }
         case 5:{ 
             browseStackOverFlow(p);
             nextTurn(m, p, n, s);
+            return;
             break;
         }
         case 6:{ 
@@ -1075,13 +1130,17 @@ void Game::openMenu(Map m, Player p, Npc n, Store s){
             if(p.getHackersDefeated() == 0){
                 cout << "Invalid input. Select an option from 1 to 6" << endl;
                 openMenu(m, p, n, s);
+                return;
             }else if(p.getHackersDefeated() >= 1){
-                //implement nextRoom method
+                cout << "You have chosen to move on. Good luck, " << p.getName() << endl;
+                newRoom(m, p, n, s);
+                return;
             }
         }
         default:{
             cout << "Invalid input. Select an option from 1 to 6." << endl;
             openMenu(m, p, n, s);
+            return;
             break;
         }
     }

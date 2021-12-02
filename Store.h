@@ -22,7 +22,7 @@ class Store {
         void setBaseInternetPrice(int level);
 
         //display the menu of available parts
-        void displayMenu(Player p, int roomNum);
+        void displayMenu(Player &p, int roomNum);
 
         //getters
         double getcpuPrice();

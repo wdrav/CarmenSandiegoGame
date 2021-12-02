@@ -169,7 +169,7 @@ void Store::setPrices(int roomNum){
 
 //display the menu of prices
 
-void Store::displayMenu(Player p, int roomNum){
+void Store::displayMenu(Player &p, int roomNum){
     setPrices(roomNum);
     int menuOption = 0;
     int totalSpent = 0;
@@ -358,20 +358,21 @@ void Store::displayMenu(Player p, int roomNum){
                 int level;
                 setBaseInternetPrice(2);
                 setPrices(roomNum);
-                cout << "Internet provider level 2 costs " << getInternetPrice() << "Dogecoins." << endl;
+                cout << "Internet provider level 2 costs " << getInternetPrice() << " Dogecoins." << endl;
                 setBaseInternetPrice(3);
                 setPrices(roomNum);
-                cout << "Internet provider level 3 costs " << getInternetPrice() << "Dogecoins." << endl;
+                cout << "Internet provider level 3 costs " << getInternetPrice() << " Dogecoins." << endl;
                 setBaseInternetPrice(4);
                 setPrices(roomNum);
-                cout << "Internet provider level 4 costs " << getInternetPrice() << "Dogecoins." << endl;
+                cout << "Internet provider level 4 costs " << getInternetPrice() << " Dogecoins." << endl;
                 setBaseInternetPrice(5);
                 setPrices(roomNum);
-                cout << "Internet provider level 5 costs " << getInternetPrice() << "Dogecoins." << endl;
+                cout << "Internet provider level 5 costs " << getInternetPrice() << " Dogecoins." << endl;
                 cout << "Internet providers can be upgraded at a later time if desired. Having a better internet provider" << endl;
                 cout << "increases your chances of winning a hacker battle. Which internet provider would you like to buy?" << endl;
                 cin >> level;
                 setBaseInternetPrice(level);
+                p.setIPlvl(level);
                 setPrices(roomNum);
                 totalSpent += getInternetPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;

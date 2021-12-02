@@ -32,18 +32,18 @@ class Game {
         Game();
 
         //miscellaneous functions
-        void openMenu(Map m, Player p, Npc n, Store s);
+        void openMenu(Map &m, Player &p, Npc &n, Store s);
         // void startGame();
-        void endGame(Player p);
-        void displayStats(Player p);
-        void misfortune(Player p);
-        void speakToNpc(Npc n, Player p);
-        void browseStackOverFlow(Player p);
-        void useAntivirus(Player p);
-        void repairComputer(Player p);
-        void nextTurn(Map m, Player p, Npc n, Store s);
-        void travelRoom(Map m, Player p, Npc n, Store s);
-        void newRoom(Map &m, Player p);
+        void endGame(Player &p);
+        void displayStats(Player &p);
+        void misfortune(Player &p);
+        void speakToNpc(Npc n, Player &p);
+        void browseStackOverFlow(Player &p);
+        void useAntivirus(Player &p);
+        void repairComputer(Player &p);
+        void nextTurn(Map &m, Player &p, Npc n, Store s);
+        void travelRoom(Map &m, Player &p, Npc n, Store s);
+        void newRoom(Map &m, Player &p, Npc n, Store &s);
 
 
         //setters
