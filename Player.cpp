@@ -76,6 +76,9 @@ void Player::setProgress(int p){
 void Player::addHackersDefeated(int h){
     hackersDefeated += h;
 }
+void Player::resetHackersDefeated(){
+    hackersDefeated = 0;
+}
 
 void Player::addVPN(int vpn){
     numVPN += vpn;
@@ -221,6 +224,11 @@ int Player::getVirus(){
 
 int Player::getMaintenance(){
     return maintenanceLevel;
+}
+
+int Player::getTotalParts(){
+    int parts = getNumGpu() + getnumcpu() + getnumPowerSupply() + getnumCases() + getnumInternetCard() + getnumKeyboardAndMouse();
+    return parts;
 }
 
 

@@ -5,7 +5,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Game.h"
 #include "Hacker.h"
 #include <fstream>
 #include <iostream>
@@ -46,6 +45,7 @@ class Player {
         void setIPlvl(int l);
         void setProgress(int p);
         void addHackersDefeated(int a);
+        void resetHackersDefeated();
         void setComputers(int c);
         void addVPN(int v);
         void addNumgpu(int g);
@@ -83,6 +83,7 @@ class Player {
         int getnumUSB();
         int getMaintenance();
         int getVirus();
+        int getTotalParts();
 
         //methods
         bool fightHacker(Hacker h);

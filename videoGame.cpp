@@ -12,6 +12,7 @@ using namespace std;
 int main(){
     string playerName;
     Store bestBuy;
+    Game game;
     //explain concept of the game to player
     cout << "Welcome to Where in the Code is Carmen San Diego!" << endl;
     cout << endl;
@@ -35,5 +36,5 @@ int main(){
     cout << "You will now be placed inside a Best Buy store in order to purchase parts for the game." << endl;
     cout << "When you are done shopping, you will be placed in the first server room to start the game." << endl;
     cout << "Here is a selection of the parts available for purchase:" << endl;
-    bestBuy.displayMenu(player);
+    // bestBuy.displayMenu(player, game.);
 }

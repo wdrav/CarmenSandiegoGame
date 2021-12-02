@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Npc.h"
 #include "Hacker.h"
+#include "Map.h"
 #include "Store.h"
 #include <string>
 
@@ -31,7 +32,7 @@ class Game {
         Game();
 
         //miscellaneous functions
-        void openMenu(Player p);
+        void openMenu(Map m, Player p, Npc n, Store s);
         // void startGame();
         void endGame(Player p);
         void displayStats(Player p);
@@ -40,7 +41,9 @@ class Game {
         void browseStackOverFlow(Player p);
         void useAntivirus(Player p);
         void repairComputer(Player p);
-        void nextTurn(Player p);
+        void nextTurn(Map m, Player p, Npc n, Store s);
+        void travelRoom(Map m, Player p, Npc n, Store s);
+        void newRoom(Map m, Player p);
 
 
         //setters

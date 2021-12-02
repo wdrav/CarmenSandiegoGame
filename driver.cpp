@@ -190,6 +190,8 @@ int main(){
 
     Game game;
     Player p("Will");
+    Map m;
+    Store s;
 
     // game.misfortune(p);
 
@@ -226,6 +228,7 @@ int main(){
     // game.repairComputer(p);
 
     game.setHackers("hackers.txt");
+    game.newRoom(m, p);
 
     // Hacker b = game.getHacker(2);
 
@@ -233,5 +236,5 @@ int main(){
 
     // p.subMaintenance(100);
 
-    game.openMenu(p);
+    game.openMenu(m, p, tony, s);
 }

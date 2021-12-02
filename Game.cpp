@@ -204,7 +204,7 @@ void Game::displayStats(Player p){
     /* Display all of the stats of the player, the number of moves they have taken,
         the frustration, the maintenence of the computer, the dogecoins, and the parts.
     */
-   cout << "Room Number " << room << endl;
+   cout << "Room Number: " << room << endl;
    cout << "Turn Number: " << turn << endl;
    cout << "Current computer mainenance level: " << p.getMaintenance() << endl;
    cout << "Number of viruses: " << p.getVirus() << endl;
@@ -851,7 +851,70 @@ Hacker Game::getHacker(int rn){
 
 }
 
-void Game::nextTurn(Player p){
+void Game::newRoom(Map m, Player p){
+    room++;
+    if(room == 6){
+        cout << "Nice job! You finished the game!" << endl;
+        endGame(p);
+        return;
+    }
+
+    m.resetMap();
+    int numberHackers = rand() % 3 + 1; //1,2,3
+    m.setHackerCount(numberHackers);
+    bool running = true;
+    for(int i = 0; i < numberHackers; i++){
+        while(running){
+            int rows = rand() % 5; //0-4
+            int col = rand() % 9;  //0 - 8
+            if(m.isHackerLocation()){
+                continue;
+            }else{
+                m.spawnHacker(rows, col);
+                running = false;
+            }
+        }
+    }
+
+    int numberNpcs = rand() % 3 + 1;
+    m.setNPCCount(numberNpcs);
+    running = true;
+    for(int i = 0; i < numberNpcs; i++){
+        while(running){
+            int rows = rand() % 5; //0-4
+            int col = rand() % 9;  //0 - 8 
+            if(m.isHackerLocation()){
+                continue;
+            }else if(m.isNPCLocation()){
+                continue;
+            }else{
+                m.spawnNPC(rows, col);
+                running = false;
+            }
+        }
+    }
+
+    running = true;
+    while(running){
+        int rows = rand() % 5; //0-4
+        int col = rand() % 9;  //0 - 8
+        if(m.isHackerLocation()){
+            continue;
+        }else if(m.isNPCLocation()){
+            continue;
+        }else{
+            m.spawnBestBuy(rows, col);
+            running = false;
+        }
+            
+    }
+
+    turn = 0;
+    p.resetHackersDefeated();
+    
+}
+
+void Game::nextTurn(Map m, Player p, Npc n, Store s){
     turn++;
     p.setDogecoins(5);
     int num = 5;
@@ -870,7 +933,52 @@ void Game::nextTurn(Player p){
         }
 
     }
-    openMenu(p);
+    openMenu(m, p, n, s);
+}
+
+void Game::travelRoom(Map m, Player p, Npc n, Store s){
+    char move;
+    bool moving = true;
+    int frustration = p.getFrustration();
+
+    while(moving){
+        m.displayMap();
+        cout << "Valid moves are:" << endl;
+        m.displayMoves();
+        cout << "Input a move:" << endl;
+        cin >> move;
+        m.executeMove(move);
+        frustration = p.getFrustration() + 2;
+        p.setFrustration(frustration);
+        if(p.getFrustration() >= 100){
+            endGame(p);
+        }
+        misfortune(p);
+        if(m.isHackerLocation()){
+                // fight a hacker
+            Hacker temp = getHacker(room); //add implementation to see if you landed on a spot with a hacker
+            bool result = p.fightHacker(temp);
+            if(p.getMaintenance() <=0){
+                    cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
+                    endGame(p);
+                }
+            if(result == false){
+                progressLevel += 25;
+                if(progressLevel >= 100){
+                    cout << "Carment has reached her maximum progress! You have lost the game!" << endl;
+                    endGame(p);
+                }
+            }
+        }
+        if(m.isNPCLocation()){
+            speakToNpc(n, p);
+        }
+        if(m.isBestBuyLocation()){
+            s.displayMenu(p, room);
+        }
+        //nextGame();
+    }
+
 }
 
 void Game::endGame(Player p){
@@ -885,7 +993,7 @@ void Game::endGame(Player p){
 
 }
 
-void Game::openMenu(Player p){
+void Game::openMenu(Map m, Player p, Npc n, Store s){
     //displays the menu given to the player at the beginning of every turn.
     //switch statement inside of driver catches player response and what to do
     
@@ -909,11 +1017,12 @@ void Game::openMenu(Player p){
     switch(option){
         case 1:{ //status update
             displayStats(p);
-            openMenu(p);
+            openMenu(m, p, n, s);
             break;
         }
         case 2:{
-            //implement travel server room function
+            travelRoom(m, p, n, s);
+            break;
 
 
             // fight a hacker
@@ -933,18 +1042,24 @@ void Game::openMenu(Player p){
             // break;
         }
         case 3:{ 
-            repairComputer(p);
-            nextTurn(p);
+            if(p.getTotalParts() <= 0){
+                cout << "You do not have any computer parts to repair your computer." << endl;
+            }
+            else{
+                repairComputer(p);
+            }
+            break;
+            nextTurn(m, p, n, s);
             break;
         }
         case 4:{ 
             useAntivirus(p);
-            nextTurn(p);
+            nextTurn(m, p, n, s);
             break;
         }
         case 5:{ 
             browseStackOverFlow(p);
-            nextTurn(p);
+            nextTurn(m, p, n, s);
             break;
         }
         case 6:{ 
@@ -953,18 +1068,17 @@ void Game::openMenu(Player p){
             break;
             
         }
-        case 7:{ //browse stack overflow
+        case 7:{ 
             if(p.getHackersDefeated() == 0){
                 cout << "Invalid input. Select an option from 1 to 6" << endl;
-                openMenu(p);
-                nextTurn(p);
+                openMenu(m, p, n, s);
             }else if(p.getHackersDefeated() >= 1){
                 //implement nextRoom method
             }
         }
         default:{
             cout << "Invalid input. Select an option from 1 to 6." << endl;
-            openMenu(p);
+            openMenu(m, p, n, s);
             break;
         }
     }
