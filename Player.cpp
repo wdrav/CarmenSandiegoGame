@@ -29,6 +29,7 @@ Player::Player(){
     numUSB = 0;
     numVirus = 0;
     maintenanceLevel = 100;
+
 }
 
 Player::Player(string n){
@@ -49,6 +50,7 @@ Player::Player(string n){
     numUSB = 0;
     numVirus = 0;
     maintenanceLevel = 100;
+
 }
 
 //setters
@@ -156,6 +158,10 @@ void Player::subMaintenance(int m){
     }
 }
 
+void Player::setTotalHackersDefeated(int x){
+    totalHackersDefeated += x;
+}
+
 //getters
 
 double Player::getDogecoin(){
@@ -229,6 +235,10 @@ int Player::getMaintenance(){
 int Player::getTotalParts(){
     int parts = getNumGpu() + getnumcpu() + getnumPowerSupply() + getnumCases() + getnumInternetCard() + getnumKeyboardAndMouse();
     return parts;
+}
+
+int Player::getTotalHackersDefeated(){
+    return totalHackersDefeated;
 }
 
 
@@ -386,4 +396,16 @@ bool Player::fightHacker(Hacker h){
     }
  
     return true;
+}
+
+void Player::forfeit(Hacker h){
+    cout << "You have chosen to forfeit the battle. How disappointing. " << endl;
+    cout << "Because of this, you lose all of your spare computer parts. " << endl;
+    numgpu = 0;
+    numcpu = 0;
+    numPowerSupply = 0;
+    numCases = 0;
+    numInternetCard = 0;
+    numKeyboardAndMouse = 0;
+    return;
 }

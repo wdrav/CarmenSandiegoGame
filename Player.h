@@ -32,6 +32,8 @@ class Player {
         int numUSB;
         int numVirus;
         int maintenanceLevel;
+        int totalHackersDefeated;
+
 
     public:
         //constructors
@@ -64,6 +66,7 @@ class Player {
         void addVirus(int a);
         void addMaintenance(int m);
         void subMaintenance(int m);
+        void setTotalHackersDefeated(int x);
         
         //getters
         double getDogecoin();
@@ -84,9 +87,11 @@ class Player {
         int getMaintenance();
         int getVirus();
         int getTotalParts();
+        int getTotalHackersDefeated();
 
         //methods
         bool fightHacker(Hacker h);
+        void forfeit(Hacker h);
 
 
 };

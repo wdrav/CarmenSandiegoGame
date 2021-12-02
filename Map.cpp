@@ -100,7 +100,7 @@ bool Map::spawnHacker(int row, int col) {
     if (hackerPositions[hacker_count][0] == -1 && hackerPositions[hacker_count][1] == -1) {
         hackerPositions[hacker_count][0] = row;
         hackerPositions[hacker_count][1] = col;
-        mapData[row][col] = 'H';
+        mapData[row][col] = '-';
         hacker_count++;
         return true;
     }

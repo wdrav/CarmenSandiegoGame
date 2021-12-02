@@ -26,6 +26,9 @@ class Game {
         string hackUsed[20];
         int count;
         int room;
+        int visitedNPCs[6][2];
+        int countVisited;
+        int playerScore;
 
     public:
         //constructor:
@@ -53,6 +56,7 @@ class Game {
         void setHackers(string fileName);
         void setProgress(int p);
         void addMove();
+        void setPlayerScore(Player &p);
 
         //getters
         int getTurn();
@@ -61,6 +65,8 @@ class Game {
         string getAnswer(); //will use puzzleNum to return the answer
         int getMoves();
         Hacker getHacker(int roomNum);
+        int getRoom(); //new
+        int getPlayerScore(Player p);
 
 };
 

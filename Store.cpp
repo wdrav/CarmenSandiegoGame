@@ -177,16 +177,16 @@ void Store::displayMenu(Player &p, int roomNum){
     double totalDogecoins = p.getDogecoin();
     cout << "You have " << p.getDogecoin() << " dogecoins, " << 
     p.getComputers() << " computer, and " << p.getVPN() << " VPN." << endl;
-    cout << "You will need to spend the rest of your money on the following items:" << endl;
-    cout << "- COMPUTER PARTS. If your computer breaks, you need 5 computer parts to make a new one." << endl;
-    cout << "- ANTIVIRUS SOFTWARE. If your computer is infected with a virus, use the antivirus software to get rid of it." << endl;
-    cout << "- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have the harder it is for a hacker to infect your computer with a virus." << endl;
-    cout << "- INTERNET PROVIDER. The better the internet provider, the more reliable your hacking will be." << endl;
-    cout << "You can spend all of your money here before you start your journey," << endl;
-    cout << "or you can save some to spend on a different electronics site along the way." << endl;
-    cout << "But beware, some of the websites online are shady," << endl;
-    cout << "and they won’t always give you a fair price..." << endl;
-    cout << endl;
+    // cout << "You have the otpion spend the rest of your money on the following items:" << endl;
+    // cout << "- COMPUTER PARTS. If your computer breaks, you need 5 computer parts to make a new one." << endl;
+    // cout << "- ANTIVIRUS SOFTWARE. If your computer is infected with a virus, use the antivirus software to get rid of it." << endl;
+    // cout << "- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have the harder it is for a hacker to infect your computer with a virus." << endl;
+    // cout << "- INTERNET PROVIDER. The better the internet provider, the more reliable your hacking will be." << endl;
+    // cout << "You can spend all of your money here before you start your journey," << endl;
+    // cout << "or you can save some to spend on a different electronics site along the way." << endl;
+    // cout << "But beware, some of the websites online are shady," << endl;
+    // cout << "and they won’t always give you a fair price..." << endl;
+    // cout << endl;
     do{
         cout << "Please select the category of items you would like to purchase from:" << endl;
         cout << "1 - COMPUTER PARTS" << endl;
@@ -198,7 +198,7 @@ void Store::displayMenu(Player &p, int roomNum){
         switch(menuOption){
             case 1:{
                 int compPartsOption = 0;
-                cout << "Best Buy recommends a purchase of at least 1 of each computer part in case your main computer breaks." << endl;
+                // cout << "Best Buy recommends a purchase of at least 1 of each computer part in case your main computer breaks." << endl;
                 cout << "You currently have these parts:" << endl;
                 cout << p.getnumcpu() << " CPU(s)" << endl;
                 cout << p.getNumGpu() << " GPU(s)" << endl;
@@ -217,7 +217,7 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "5 - An Internet Card costs " << getInternetCardPrice() << " dogecoins." << endl;
                 cout << "6 - A Keyboard and Mouse costs " << getKeyboardAndMousePrice() << " dogecoins." << endl;
                 cout << "7 - A premade Computer costs " << getPremadePrice() << " dogecoins." << endl;
-                cout << "Press 8 to return to main Best Buy menu." << endl;
+                cout << "8 - Return to main Best Buy menu." << endl;
                 do{
                     cout << "Please select a part you would like to purchase:" << endl;
                     cin >> compPartsOption;
@@ -225,103 +225,151 @@ void Store::displayMenu(Player &p, int roomNum){
                         case 1:{
                             cout << "How many CPUs would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(getcpuPrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getnumcpu() + numPartsPurchased > 3){
+                                cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
+                                cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                p.addNumcpu(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getcpuPrice();
-                                totalDogecoins -= numPartsPurchased * getcpuPrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getcpuPrice() * numPartsPurchased > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.addNumcpu(numPartsPurchased);
+                                    totalSpent += numPartsPurchased * getcpuPrice();
+                                    totalDogecoins -= numPartsPurchased * getcpuPrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 2:{
                             cout << "How many GPUs would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(getgpuPrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getNumGpu() + numPartsPurchased > 3){
+                                cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
+                                cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                p.addNumgpu(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getgpuPrice();
-                                totalDogecoins -= numPartsPurchased * getgpuPrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getgpuPrice() * numPartsPurchased > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.addNumgpu(numPartsPurchased);
+                                    totalSpent += numPartsPurchased * getgpuPrice();
+                                    totalDogecoins -= numPartsPurchased * getgpuPrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 3:{
                             cout << "How many Power Supply Units would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(getPowerSupplyPrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getnumPowerSupply() + numPartsPurchased > 3){
+                                cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
+                                cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                p.addNumPowerSupply(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getPowerSupplyPrice();
-                                totalDogecoins -= numPartsPurchased * getPowerSupplyPrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getPowerSupplyPrice() * numPartsPurchased > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.addNumPowerSupply(numPartsPurchased);
+                                    totalSpent += numPartsPurchased * getPowerSupplyPrice();
+                                    totalDogecoins -= numPartsPurchased * getPowerSupplyPrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 4:{
                             cout << "How many Computer Cases would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(getComputerCasePrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getnumCases() + numPartsPurchased > 3){
+                                cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
+                                cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                p.addNumCases(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getComputerCasePrice();
-                                totalDogecoins -= numPartsPurchased * getComputerCasePrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getComputerCasePrice() * numPartsPurchased > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.addNumCases(numPartsPurchased);
+                                    totalSpent += numPartsPurchased * getComputerCasePrice();
+                                    totalDogecoins -= numPartsPurchased * getComputerCasePrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 5:{
                             cout << "How many Internet Cards would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(getInternetCardPrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getnumInternetCard() + numPartsPurchased > 3){
+                                cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
+                                cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                p.addNumInternetCard(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getInternetCardPrice();
-                                totalDogecoins -= numPartsPurchased * getInternetCardPrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getInternetCardPrice() * numPartsPurchased > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.addNumInternetCard(numPartsPurchased);
+                                    totalSpent += numPartsPurchased * getInternetCardPrice();
+                                    totalDogecoins -= numPartsPurchased * getInternetCardPrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 6:{
                             cout << "How many Keyboards and Mice would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(getKeyboardAndMousePrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getnumKeyboardAndMouse() + numPartsPurchased > 3){
+                                cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
+                                cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                p.addNumKeyboardAndMouse(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getKeyboardAndMousePrice();
-                                totalDogecoins -= numPartsPurchased * getKeyboardAndMousePrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getKeyboardAndMousePrice() * numPartsPurchased > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.addNumKeyboardAndMouse(numPartsPurchased);
+                                    totalSpent += numPartsPurchased * getKeyboardAndMousePrice();
+                                    totalDogecoins -= numPartsPurchased * getKeyboardAndMousePrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 7:{
-                            cout << "How many premade Computers would you like to purchase?" << endl;
-                            cin >> numPartsPurchased;
-                            if(getPremadePrice() * numPartsPurchased > p.getDogecoin()){
-                                cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                            if(p.getComputers() > 0){
+                                cout << "You are only allowed one premade computer at a time in your inventory." << endl;
+                                cout << "Please select a different part to purchase." << endl;
                             }
                             else{
-                                p.setComputers(numPartsPurchased);
-                                totalSpent += numPartsPurchased * getPremadePrice();
-                                totalDogecoins -= numPartsPurchased * getPremadePrice();
-                                cout << "Total cost of items so far: " << totalSpent << endl;
+                                if(getPremadePrice() > p.getDogecoin()){
+                                    cout << "You do not have enough dogecoins to complete this purchase." << endl;
+                                }
+                                else{
+                                    p.setComputers(1);
+                                    totalSpent += getPremadePrice();
+                                    totalDogecoins -= getPremadePrice();
+                                    cout << "Total cost of items so far: " << totalSpent << endl;
+                                }
                             }
                             break;
                         }
                         case 8:{
                             cout << "Returning to Best Buy main menu..." << endl;
+                            cout << "You now have these parts in your inventory:" << endl;
+                            cout << p.getnumcpu() << " CPU(s)" << endl;
+                            cout << p.getNumGpu() << " GPU(s)" << endl;
+                            cout << p.getnumPowerSupply() << " Power Supply Unit(s)" << endl;
+                            cout << p.getnumCases() << " Computer Case(s)" << endl;
+                            cout << p.getnumInternetCard() << " Internet Card(s)" << endl;
+                            cout << p.getnumKeyboardAndMouse() << " Keyboard and Mouse" << endl;
+                            cout << p.getComputers() << " Premade Computer(s)" << endl;
                             break;
                         }
                         default:{
@@ -329,7 +377,7 @@ void Store::displayMenu(Player &p, int roomNum){
                             break;
                         }
                     }
-                    cout << totalDogecoins << endl;
+                    // cout << totalDogecoins << endl;
                     p.setDogecoins(totalDogecoins);
                 }
                 while(p.getDogecoin() > 0 && compPartsOption != 8);
@@ -342,7 +390,10 @@ void Store::displayMenu(Player &p, int roomNum){
                 cin >> numPartsPurchased;
                 p.addVPN(numPartsPurchased);
                 totalSpent += numPartsPurchased * getAntivirusPrice();
+                totalDogecoins -= numPartsPurchased * getAntivirusPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;
+                // cout << totalDogecoins << endl;
+                p.setDogecoins(totalDogecoins);
                 break;
             }
             case 3:{
@@ -350,8 +401,11 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs." << endl;
                 cout << "How many VPNs would you like to purchase?" << endl;
                 cin >> numPartsPurchased;
-                totalSpent += numPartsPurchased * getAntivirusPrice();
+                totalSpent += numPartsPurchased * getvpnPrice();
+                totalDogecoins -= numPartsPurchased * getvpnPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;
+                // cout << totalDogecoins << endl;
+                p.setDogecoins(totalDogecoins);
                 break;
             }
             case 4:{ //need to fix internet price
@@ -375,7 +429,10 @@ void Store::displayMenu(Player &p, int roomNum){
                 p.setIPlvl(level);
                 setPrices(roomNum);
                 totalSpent += getInternetPrice();
+                totalDogecoins -= getInternetPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;
+                // cout << totalDogecoins << endl;
+                p.setDogecoins(totalDogecoins);
                 break;
             }
             case 5:{

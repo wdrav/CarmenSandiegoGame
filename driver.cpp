@@ -43,10 +43,10 @@ int main(){
     // cout << store2.getvpnPrice() << endl;
     // cout << store2.getInternetPrice() << endl; // fix
     //testing displayMenu function
-    // cout << "testing displayMenu function" << endl;
-    // Store store3(3);
-    // Player will("Will");
-    // store3.displayMenu(will, 3);
+    cout << "testing displayMenu function" << endl;
+    Store store3(1);
+    Player will("Will");
+    store3.displayMenu(will, 1);
 
 
     
@@ -188,14 +188,14 @@ int main(){
 
     srand(time(0));
 
-    Game game;
-    Player p("Will");
-    Map m;
-    Store s;
+    // Game game;
+    // Player p("Will");
+    // Map m;
+    // Store s;
 
     // game.misfortune(p);
 
-    Npc tony("Tony", 1);
+    // Npc tony("Tony", 1);
 
     // p.addVPN(-1);
 
@@ -207,11 +207,11 @@ int main(){
 
     // cout << game.getVirus() << endl;
 
-    game.setPuzzles("puzzles.txt");
+    //game.setPuzzles("puzzles.txt");
 
     // cout << game.getRandPuzzle();
 
-    game.setAnswers("answers.txt");
+    // game.setAnswers("answers.txt");
 
     // game.speakToNpc(tony, p);
 
@@ -219,7 +219,7 @@ int main(){
 
     // cout << rand() % 6 + 1 << endl;
 
-    Hacker tommy;
+    // Hacker tommy;
 
     // p.fightHacker(tommy);
 
@@ -227,12 +227,12 @@ int main(){
 
     // game.repairComputer(p);
 
-    game.setHackers("hackers.txt");
-    game.newRoom(m, p, tony, s);
+    // game.setHackers("hackers.txt");
+    // game.newRoom(m, p, tony, s);
     // m.displayMap();
     // cout << "number of hackers: " << m.getHackerCount() << endl;
     // cout << "number of npcs: " << m.getNPCCount() << endl;
-    game.openMenu(m, p, tony, s);
+    // game.openMenu(m, p, tony, s);
 
 
     // Hacker b = game.getHacker(2);
