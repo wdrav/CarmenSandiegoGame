@@ -15,7 +15,7 @@
 using namespace std;
 
 Game::Game(){
-    turn = 0;
+    turn = 1;
     progressLevel = 0;
     puzzleNum = 0;
     numMoves = 0;
@@ -204,6 +204,8 @@ void Game::displayStats(Player p){
     /* Display all of the stats of the player, the number of moves they have taken,
         the frustration, the maintenence of the computer, the dogecoins, and the parts.
     */
+   cout << "Room Number " << room << endl;
+   cout << "Turn Number: " << turn << endl;
    cout << "Current computer mainenance level: " << p.getMaintenance() << endl;
    cout << "Number of viruses: " << p.getVirus() << endl;
    cout << "Computer parts available: " << endl;
@@ -675,6 +677,7 @@ void Game::browseStackOverFlow(Player p){
                         }else{
                             cout << "Invalid option. You can't cheat!" << endl;
                         }
+                        keepGoing = false;
                     }else if(selection == 3){
                         if(num == 1){
                             cout << "I chose rock. You lose." << endl;
@@ -857,7 +860,7 @@ void Game::nextTurn(Player p){
         num += 5;
     }
 
-    if(turn == 10){
+    if(turn == 11){
         if(p.getHackersDefeated() == 0){
             cout << "You haven't defeated any hackers!!" << endl;
             cout << "You lose!" << endl;
@@ -918,6 +921,7 @@ void Game::openMenu(Player p){
             // bool result = p.fightHacker(temp);
             // if(p.getMaintenance() <=0){
             //         cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
+                        //eendgame;
             //     }
             // if(result == false){
             //     progressLevel += 25;
