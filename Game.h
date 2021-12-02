@@ -40,6 +40,7 @@ class Game {
         void browseStackOverFlow(Player p);
         void useAntivirus(Player p);
         void repairComputer(Player p);
+        void nextTurn(Player p);
 
 
         //setters

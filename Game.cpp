@@ -220,7 +220,7 @@ void Game::displayStats(Player p){
    cout << "Dogecoins: " << p.getDogecoin() << endl;
    cout << "Frustration level: " << p.getFrustration() << endl;
    cout << "Progress: " << p.getProgress() << endl;
-   cout << "Number of hackers defeated: " << p.getHackersDefeated() << endl;
+   cout << "Number of hackers defeated: " << p.getHackersDefeated() << endl << endl;
 
 }
 
@@ -392,7 +392,6 @@ void Game::speakToNpc(Npc n, Player p){
                 string ans;
 
                 cout << getRandPuzzle() << endl;
-                cout << getAnswer() << endl;
                 cin >> ans;
 
                 if(ans == getAnswer()){
@@ -849,6 +848,28 @@ Hacker Game::getHacker(int rn){
 
 }
 
+void Game::nextTurn(Player p){
+    turn++;
+    p.setDogecoins(5);
+    int num = 5;
+    for(int i = 0; i < p.getNumGpu(); i++){
+        p.setDogecoins(5);
+        num += 5;
+    }
+
+    if(turn == 10){
+        if(p.getHackersDefeated() == 0){
+            cout << "You haven't defeated any hackers!!" << endl;
+            cout << "You lose!" << endl;
+            endGame(p);
+        }else{
+            //nextRoom implementation
+        }
+
+    }
+    openMenu(p);
+}
+
 void Game::endGame(Player p){
     //produces text that congratulates the player, shows them their stats, and 
     //finishes the game.
@@ -869,66 +890,79 @@ void Game::openMenu(Player p){
 
     cout << "-----Menu-----" << endl;
     cout << "1 - Status Update" << endl;
-    cout << "2 - Fight a Hacker" << endl;
-    cout << "3 - Speak to NPC (non-playable character)" << endl;
-    cout << "4 - Repair your Computer" << endl;
-    cout << "5 - Use your Antivirus Software" << endl;
-    cout << "6 - Travel the Server Room" << endl;
-    cout << "7 - Browse Stack Overflow" << endl;
-    cout << "8 - Quit" << endl;
-    //print out the map
+    cout << "2 - Travel the Server Room" << endl;
+    cout << "3 - Repair your Computer" << endl;
+    cout << "4 - Use your Antivirus Software" << endl;
+    cout << "5 - Browse Stack Overflow" << endl;
+    cout << "6 - Quit" << endl;
+    if(p.getHackersDefeated() >= 1){
+        cout << "7 - Next Room" << endl;
+    }
+
+
     cin >> option;
-    // add do-while loop
+
+
     switch(option){
         case 1:{ //status update
             displayStats(p);
+            openMenu(p);
             break;
         }
-        case 2:{ // fight a hacker
-            Hacker temp = getHacker(room);
-            bool result = p.fightHacker(temp);
-            if(result == false || result == true){
-                if(p.getMaintenance() <=0){
-                    cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
-                }
-            }
-            break;
+        case 2:{
+            //implement travel server room function
+
+
+            // fight a hacker
+            // Hacker temp = getHacker(room); //add implementation to see if you landed on a spot with a hacker
+            // bool result = p.fightHacker(temp);
+            // if(p.getMaintenance() <=0){
+            //         cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
+            //     }
+            // if(result == false){
+            //     progressLevel += 25;
+            //     if(progressLevel >= 100){
+            //         cout << "Carment has reached her maximum progress! You have lost the game!" << endl;
+            //         endGame(p);
+            //     }
+            // }
+            // break;
         }
-        case 3:{ //speak to NPC
-            Npc n;
-            speakToNpc(n, p);
-            break;
-        }
-        case 4:{ //repair your computer
+        case 3:{ 
             repairComputer(p);
+            nextTurn(p);
             break;
         }
-        case 5:{ //use your antivirus software
+        case 4:{ 
             useAntivirus(p);
+            nextTurn(p);
             break;
         }
-        case 6:{ //travel the server room
-        //show available mov
-            break;
-        }
-        case 7:{ //browse stack overflow
+        case 5:{ 
             browseStackOverFlow(p);
+            nextTurn(p);
             break;
         }
-        case 8:{ //quit
+        case 6:{ 
             cout << "You have quit the game!" << endl;
             endGame(p);
             break;
+            
+        }
+        case 7:{ //browse stack overflow
+            if(p.getHackersDefeated() == 0){
+                cout << "Invalid input. Select an option from 1 to 6" << endl;
+                openMenu(p);
+                nextTurn(p);
+            }else if(p.getHackersDefeated() >= 1){
+                //implement nextRoom method
+            }
         }
         default:{
-            cout << "Invalid input. Select an option from 1 to 8." << endl;
+            cout << "Invalid input. Select an option from 1 to 6." << endl;
             openMenu(p);
             break;
         }
     }
 }
-
-// void Game::startGame(){
-//     //begins the game, prints out background, and prompts the player's name
-// }
 
