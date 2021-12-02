@@ -1119,13 +1119,89 @@ void Game::travelRoom(Map &m, Player &p, Npc n, Store s){
 void Game::endGame(Player& p){
     //produces text that congratulates the player, shows them their stats, and 
     //finishes the game.
+    ifstream stream("results.txt");
     cout << "You've finished the game!" << endl;
     cout << "Player Name: " << p.getName() << endl;
     cout << "Total Hackers Defeated: " << playerScore << endl;
     cout << "Total remaining Dogecoin: " << p.getDogecoin() << endl;
+
+    string arr[100];
+    string line;
+    int scores[100];
+
+    // cout << p.getName();
+
+    // stream << p.getName() << ", " << p.getTotalHackersDefeated() << endl;
+
+    int resultCount = 0;
+
+    // getline(stream, line); //getting past first line
+
+    while(getline(stream, line)){
+        string name;
+        string score;
+
+        bool names = true;
+        for(int i = 0; i < line.length(); i++){
+            if(line[i] == ','){
+                names = false;
+            }
+
+            if(isdigit(line[i]) && names == false && line.length() - 2){
+                score = line.substr(i, 2);
+                break;
+            }
+
+            if(isdigit(line[i]) && i == line.length() -1 && names == false){
+                score = line.substr(i,1);
+            }
+            
+
+            if(names){
+                name += line[i];
+            }
+            
+        }
+
+        arr[resultCount] = name;
+        scores[resultCount] = stoi(score);
+
+        resultCount++;
+    }
+
+
+
+    arr[resultCount] = p.getName();
+    scores[resultCount] = playerScore;
+
+    resultCount++;
+
+    cout << resultCount << endl;
+
+    ofstream outStream("results.txt");
+    
+
+    for(int i = 0; i < resultCount; i++) {
+        for(int j = i+1; j < resultCount; j++)
+        {
+            if(scores[j] < scores[i]) {
+                int temp = scores[i];
+                string temps = arr[i];
+                scores[i] = scores[j];
+                arr[i] = arr[j];
+                scores[j] = temp;
+                arr[j] = temps;
+            }
+        }
+    }
+
+    for(int i = 0; i < resultCount; i++){
+        outStream << arr[i] << ", " << scores[i] << endl;
+    }
+
     exit(1);
 
-    fstream stream;
+    
     
 
 }
