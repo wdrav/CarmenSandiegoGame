@@ -1,4 +1,3 @@
-Drav, 0
 Hello, 0
 WillistheBest, 1
 Fred, 1
