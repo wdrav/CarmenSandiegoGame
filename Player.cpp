@@ -29,6 +29,7 @@ Player::Player(){
     numUSB = 0;
     numVirus = 0;
     maintenanceLevel = 100;
+    totalHackersDefeated = 0;
 
 }
 
@@ -50,6 +51,7 @@ Player::Player(string n){
     numUSB = 0;
     numVirus = 0;
     maintenanceLevel = 100;
+    totalHackersDefeated = 0;
 
 }
 

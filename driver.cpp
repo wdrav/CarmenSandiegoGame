@@ -43,10 +43,10 @@ int main(){
     // cout << store2.getvpnPrice() << endl;
     // cout << store2.getInternetPrice() << endl; // fix
     //testing displayMenu function
-    cout << "testing displayMenu function" << endl;
-    Store store3(1);
-    Player will("Will");
-    store3.displayMenu(will, 1);
+    // cout << "testing displayMenu function" << endl;
+    // Store store3(1);
+    // Player will("Will");
+    // store3.displayMenu(will, 1);
 
 
     
@@ -242,4 +242,38 @@ int main(){
     // p.subMaintenance(100);
 
     // game.openMenu(m, p, tony, s);
+
+    Hacker h;
+    Map m;
+    Player p;
+    Store s;
+    Npc n;
+    Game g;
+
+    g.setHackers("hackers.txt");
+    g.setPuzzles("puzzles.txt");
+    g.setAnswers("answers.txt");
+
+    g.newRoom(m, p, n, s);
+
+    m.resetMap();
+
+    g.newRoom(m, p, n, s);
+
+    m.resetMap();
+
+    g.newRoom(m, p, n, s);
+
+    m.resetMap();
+
+    g.newRoom(m, p, n, s);
+
+    m.resetMap();
+
+    g.newRoom(m, p, n, s);
+
+    m.resetMap();
+
+
+    
 }

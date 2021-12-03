@@ -33,6 +33,7 @@ class Player {
         int numVirus;
         int maintenanceLevel;
         int totalHackersDefeated;
+        int score;
 
 
     public:

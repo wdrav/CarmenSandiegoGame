@@ -388,7 +388,7 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "give you a one-time use to get rid of any viruses on your computer." << endl;
                 cout << "How many antivirus USB sticks would you like to purchase?" << endl;
                 cin >> numPartsPurchased;
-                p.addVPN(numPartsPurchased);
+                p.addNumUSBstick(numPartsPurchased);
                 totalSpent += numPartsPurchased * getAntivirusPrice();
                 totalDogecoins -= numPartsPurchased * getAntivirusPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;
@@ -401,6 +401,7 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs." << endl;
                 cout << "How many VPNs would you like to purchase?" << endl;
                 cin >> numPartsPurchased;
+                p.addVPN(numPartsPurchased);
                 totalSpent += numPartsPurchased * getvpnPrice();
                 totalDogecoins -= numPartsPurchased * getvpnPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;

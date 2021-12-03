@@ -157,7 +157,7 @@ void Game::repairComputer(Player &p){
                             cout << "You have less than " << numPart << " Computer Cases." << endl; 
                         }
                         else{
-                            p.subNumcpu(numPart);
+                            p.subNumCases(numPart);
                         }
                     }
                     else{
@@ -198,6 +198,7 @@ void Game::repairComputer(Player &p){
                     break;
                 }
                 case 7:{
+                    p.addMaintenance(20 * numPart);
                     cout << "You have successfully exited the computer repair process. Your computer's maintenance level is currently at " << p.getMaintenance() << "." << endl;
                     break;
                 }
@@ -234,8 +235,8 @@ void Game::displayStats(Player &p){
    cout << "Frustration level: " << p.getFrustration() << endl;
    cout << "Carmen's progress level: " << progressLevel << endl;
    cout << "Number of hackers defeated in this room: " << p.getHackersDefeated() << endl << endl;
-   cout << "Your current score: " << getPlayerScore(p) << endl;
-   cout << "Turn Number: " << turn << endl;
+   cout << "Your current score: " << p.getTotalHackersDefeated() << endl;
+   cout << "Turn Number: " << turn << endl << endl;
 
 }
 
@@ -380,7 +381,7 @@ void Game::misfortune(Player &p){
             
         }else if(i == 2){
             cout << "OH NO! Why won't my code work????" << endl;
-            p.setFrustration(10);
+            p.setFrustration(p.getFrustration() - 10);
 
             if(p.getFrustration() >= 100){
                 cout << "OH NO! You have rage quit!" << endl;
@@ -673,9 +674,9 @@ void Game::browseStackOverFlow(Player &p){
                         }else if(num == 3){
                             cout << "Oh you got me! I chose scissors." << endl;
                             if(p.getFrustration() < 5){
-                                p.setFrustration(-1 *(p.getFrustration()));
+                                p.setFrustration(0);
                             }else{
-                                p.setFrustration(-5);
+                                p.setFrustration(p.getFrustration() - 5);
                             }
                         }else if(num == 2){
                             cout << "I chose paper. You lose" << endl;
@@ -687,9 +688,9 @@ void Game::browseStackOverFlow(Player &p){
                         if(num == 1){
                             cout << "You got me. I chose rock." << endl;
                             if(p.getFrustration() < 5){
-                                p.setFrustration(-1 *(p.getFrustration()));
+                                p.setFrustration(0);
                             }else{
-                                p.setFrustration(-5);
+                                p.setFrustration(p.getFrustration() - 5);
                             }
                         }else if(num == 2){
                             cout << "I also chose paper. Tie." << endl;
@@ -705,9 +706,9 @@ void Game::browseStackOverFlow(Player &p){
                         }else if(num == 2){
                             cout << "I chose paper! You got me!" << endl;
                             if(p.getFrustration() < 5){
-                                p.setFrustration(-1 *(p.getFrustration()));
+                                p.setFrustration(0);
                             }else{
-                                p.setFrustration(-5);
+                                p.setFrustration(p.getFrustration() - 5);
                             }
                         }else if(num == 3){
                             cout << "I also chose scissors. Tie." << endl;
@@ -738,7 +739,7 @@ void Game::setTurn(){
 }
 
 void Game::setPlayerScore(Player &p){
-    playerScore = p.getTotalHackersDefeated();
+    playerScore += 1;
 }
 
 void Game::setPuzzles(string fileName){
@@ -900,6 +901,7 @@ void Game::newRoom(Map &m, Player &p, Npc n, Store &s){
 
     int numberHackers = rand() % 3 + 1; //1,2,3
     int numberNPC = rand() % 3 + 1;
+    
 
     int bestBuyCol = rand() % 9;
     int bestBuyRow = rand() % 5;
@@ -943,6 +945,7 @@ void Game::newRoom(Map &m, Player &p, Npc n, Store &s){
     m.displayMap();
 
     p.resetHackersDefeated();
+    //score goes to zero when defeating the hacker is the last turn;
     
     openMenu(m, p, n, s);
     
@@ -1053,7 +1056,7 @@ void Game::travelRoom(Map &m, Player &p, Npc n, Store s){
                 bool result = p.fightHacker(temp);
                 if(result){
                     p.addHackersDefeated(1);
-                    playerScore++;
+                    p.setTotalHackersDefeated(1);
                     //total hackers
                     visitedNPCs[count][0] = m.getPlayerRowPosition();
                     visitedNPCs[count][1] = m.getPlayerColPosition();
@@ -1134,7 +1137,7 @@ void Game::endGame(Player& p){
     ifstream stream("results.txt");
     cout << "You've finished the game!" << endl;
     cout << "Player Name: " << p.getName() << endl;
-    cout << "Total Hackers Defeated: " << playerScore << endl;
+    cout << "Total Hackers Defeated: " << p.getTotalHackersDefeated() << endl;
     cout << "Total remaining Dogecoin: " << p.getDogecoin() << endl;
 
     string arr[100];
@@ -1184,11 +1187,10 @@ void Game::endGame(Player& p){
 
 
     arr[resultCount] = p.getName();
-    scores[resultCount] = playerScore;
+    scores[resultCount] = p.getTotalHackersDefeated();
 
     resultCount++;
 
-    cout << resultCount << endl;
 
     ofstream outStream("results.txt");
     
@@ -1259,7 +1261,6 @@ void Game::openMenu(Map &m, Player &p, Npc &n, Store s){
                 repairComputer(p);
                 
             }
-            break;
             nextTurn(m, p, n, s);
             return;
             break;
