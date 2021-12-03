@@ -149,7 +149,12 @@ void Player::addVirus(int a){
 }
 
 void Player::addMaintenance(int m){
-    maintenanceLevel += m;
+
+    if(maintenanceLevel + m > 100){
+        maintenanceLevel = 100;
+    }else{
+        maintenanceLevel += m;
+    }
 }
 
 void Player::subMaintenance(int m){
@@ -244,24 +249,26 @@ int Player::getTotalHackersDefeated(){
 }
 
 
-/* This function will find determine the outcome of a battle with a hacker
-    Inputs: a hacker object
-    Outputs: outputs true or false for whether the player beats the hacker
+/* This function will find determine the outcome of a battle with a hacker by using a specific equation, and then seeing if the result is greater or less
+    than 0. 
+
+    Inputs: a hacker object to fight
+    Outputs:  true or false for whether the player beats the hacker or not
 */
 
 bool Player::fightHacker(Hacker h){
-
+ 
     cout << "You have chosen to fight " << h.getName() << "!" << endl;
     cout << "Let's see if you have what it takes: " << endl << endl;
-    int rand1 = rand() % 6 + 1;
-    int rand2 = rand() % 6 + 1;
+    int rand1 = rand() % 6 + 1; //getting 2 random numbers 1 - 6
+    int rand2 = rand() % 6 + 1; 
 
-    double eq1 = rand1 * double(IPlevel);
+    double eq1 = rand1 * double(IPlevel); //doing the equation
     double eq2 = (rand2 * double(h.getRoomNum())) * (1/ double(numVPN));
 
     double total = eq1 - eq2;
 
-    if(total > 0.0){
+    if(total > 0.0){ //checking the result - if win
         cout << "You have won the battle!" << endl;
         cout << "For your success, you have won 50 dogecoins!" << endl << endl;
 
@@ -271,23 +278,23 @@ bool Player::fightHacker(Hacker h){
         bool foundPart = false;
         int randpart = 0;
         int count = 0;
-        int used[] = {0,0,0,0,0,0};
+        int used[] = {0,0,0,0,0,0}; //an array to keep track of checked parts to decrease time
 
-        while(!foundPart){
-            randpart = rand() % 6;
+        while(!foundPart){ //losing a part, found many places in the code 
+            randpart = rand() % 6; // get a random number to find the part under that number
             
-            if(randpart == 0){
+            if(randpart == 0){ //if else to connect the randpart with a part
 
                 if(used[0] == 1){
-                    continue;
+                    continue; //keep getting random numbers if this part has already been checked
                 }
 
-                used[0] = 1;
+                used[0] = 1; //has checked this part
 
                 if(getNumGpu() > 0){
-                    addNumgpu(-1);
+                    addNumgpu(-1); //remove from inventory
                     cout << "You lost a GPU!" << endl;
-                    foundPart = true;
+                    foundPart = true; //break the loop 
                 }
 
             }else if(randpart == 1){
@@ -360,11 +367,11 @@ bool Player::fightHacker(Hacker h){
 
             int total = 0;
             
-            for(int i = 0; i < 6; i++){
+            for(int i = 0; i < 6; i++){ //do every loop to check if every part has been checked
                 total += used[i];
             }
 
-            if(total == 5){
+            if(total == 5){ //if every part has been checked and there are no parts left, 
                 cout << "You have no computer parts left!" << endl;
                 break;
             }
@@ -374,7 +381,7 @@ bool Player::fightHacker(Hacker h){
 
     }else{
         cout << "OH NO! You have lost the battle with " << h.getName() << endl;
-        int chanceVirus = rand() % 10;
+        int chanceVirus = rand() % 10; //getting a number 0-9 to see if they get a virus
 
         if(chanceVirus == 0){
             cout << "Unbelievable. The hacker has given you a virus!" << endl;
@@ -387,12 +394,14 @@ bool Player::fightHacker(Hacker h){
         return false;
         
     }
+
     int chanceLoseMaintenance = rand() % 10;
+
     if(chanceLoseMaintenance <= 2){
         maintenanceLevel -= 10;
         cout << "The battle took a lot out of your computer. Because of this, your maintenance has dropped 10 points." << endl;
         if(maintenanceLevel <= 0){
-            cout << "By dropping 10 points, you have dropped to zero, and lost the game. Better luck next time!" << endl;
+            cout << "By dropping 10 points, you have dropped to zero, and lost the game. Better luck next time!" << endl; //give reasoning for losing, travel room checks if lost or not
             
         }
     }
@@ -400,11 +409,18 @@ bool Player::fightHacker(Hacker h){
     return true;
 }
 
+/*
+    forfeit: This function is used if the player decides to forfeit a hacker battle.
+        Inputs: Hacker object that they have chosen to forfeit
+        Outputs: Prints out that they have lost their parts
+
+*/
+
 void Player::forfeit(Hacker h){
-    cout << "You have chosen to forfeit the battle. How disappointing. " << endl;
+    cout << "You have chosen to forfeit the battle. How disappointing. " << endl; //
     cout << "Because of this, you lose all of your spare computer parts. " << endl;
     numgpu = 0;
-    numcpu = 0;
+    numcpu = 0; //remove all parts
     numPowerSupply = 0;
     numCases = 0;
     numInternetCard = 0;

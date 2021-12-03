@@ -18,25 +18,24 @@ class Game {
     private:
         int turn;
         int progressLevel;
-        string puzzles[10];
-        string answers[10];
-        int puzzleNum;
+        string puzzles[10]; //array of strings holding the puzzles
+        string answers[10]; //array of string holding the answers to the puzzles
+        int puzzleNum; //stores the current puzzle index
         int numMoves;
-        Hacker hackArr[20];
-        string hackUsed[20];
+        Hacker hackArr[20]; //stores all the hacker objects based of file given
+        string hackUsed[20]; //stores the names of the hackers that have been seen
         int count;
         int room;
-        int visitedNPCs[6][2];
-        int countVisited;
+        int visitedNPCs[6][2]; //used for when travelling a room; if they have found the NPC, they can't interact.
+        int countVisited; //the count of visited hackers and NPCs in the rooms.
         int playerScore;
 
     public:
         //constructor:
         Game();
 
-        //miscellaneous functions
+        //miscellaneous functions - described in the .cpp file
         void openMenu(Map &m, Player &p, Npc &n, Store s);
-        // void startGame();
         void endGame(Player &p);
         void displayStats(Player &p);
         void misfortune(Player &p);

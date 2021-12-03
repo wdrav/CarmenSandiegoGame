@@ -14,6 +14,7 @@ using namespace std;
 
 class Player {
 
+    //private variables
     private:
         string name;
         double dogecoins;

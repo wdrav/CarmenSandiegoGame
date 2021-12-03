@@ -167,7 +167,12 @@ void Store::setPrices(int roomNum){
 
 }
 
-//display the menu of prices
+/*
+    displayMenu(Player p, int roomNum){
+        This function is used after a player has landed on bestbuy, or is just starting the game and is given the option to buy goods.
+        inputs: the player and the room number in order to update the prices based on which room you're in
+        outputs: updates the amount of dogecoins and items a player has with every loop through buying something. Displays menu and price of cart.
+*/ 
 
 void Store::displayMenu(Player &p, int roomNum){
     setPrices(roomNum);
@@ -177,16 +182,8 @@ void Store::displayMenu(Player &p, int roomNum){
     double totalDogecoins = p.getDogecoin();
     cout << "You have " << p.getDogecoin() << " dogecoins, " << 
     p.getComputers() << " computer, and " << p.getVPN() << " VPN." << endl;
-    // cout << "You have the otpion spend the rest of your money on the following items:" << endl;
-    // cout << "- COMPUTER PARTS. If your computer breaks, you need 5 computer parts to make a new one." << endl;
-    // cout << "- ANTIVIRUS SOFTWARE. If your computer is infected with a virus, use the antivirus software to get rid of it." << endl;
-    // cout << "- VIRTUAL PRIVATE NETWORK (VPN). The more VPNs you have the harder it is for a hacker to infect your computer with a virus." << endl;
-    // cout << "- INTERNET PROVIDER. The better the internet provider, the more reliable your hacking will be." << endl;
-    // cout << "You can spend all of your money here before you start your journey," << endl;
-    // cout << "or you can save some to spend on a different electronics site along the way." << endl;
-    // cout << "But beware, some of the websites online are shady," << endl;
-    // cout << "and they won’t always give you a fair price..." << endl;
-    // cout << endl;
+    //do while loop to show the menu if the player wants to do more than one action
+
     do{
         cout << "Please select the category of items you would like to purchase from:" << endl;
         cout << "1 - COMPUTER PARTS" << endl;
@@ -194,21 +191,21 @@ void Store::displayMenu(Player &p, int roomNum){
         cout << "3 - VIRTUAL PRIVATE NETWORK (VPN)" << endl;
         cout << "4 - INTERNET PROVIDER" << endl;
         cout << "5 - STOP SHOPPING" << endl;
-        cin >> menuOption;
+        cin >> menuOption; //take in the player input
         switch(menuOption){
-            case 1:{
+            case 1:{ //if they choose to buy a computer part
                 int compPartsOption = 0;
-                // cout << "Best Buy recommends a purchase of at least 1 of each computer part in case your main computer breaks." << endl;
-                cout << "You currently have these parts:" << endl;
+                
+                cout << "You currently have these parts:" << endl; //get the player's inventory
                 cout << p.getnumcpu() << " CPU(s)" << endl;
                 cout << p.getNumGpu() << " GPU(s)" << endl;
                 cout << p.getnumPowerSupply() << " Power Supply Unit(s)" << endl;
                 cout << p.getnumCases() << " Computer Case(s)" << endl;
                 cout << p.getnumInternetCard() << " Internet Card(s)" << endl;
                 cout << p.getnumKeyboardAndMouse() << " Keyboard and Mouse" << endl;
-                cout << p.getComputers() << " Premade Computer(s)" << endl; //check if this is the right function
+                cout << p.getComputers() << " Premade Computer(s)" << endl; 
 
-                cout << "You can have a maximum of 3 of each computer part and 1 extra premade computer." << endl;
+                cout << "You can have a maximum of 3 of each computer part and 1 extra premade computer." << endl; //show the price of each item
                 cout << "These are the different parts available for purchase:" << endl;
                 cout << "1 - A CPU costs " << getcpuPrice() << " dogecoins." << endl;
                 cout << "2 - A GPU costs " << getgpuPrice() << " dogecoins." << endl;
@@ -222,15 +219,15 @@ void Store::displayMenu(Player &p, int roomNum){
                     cout << "Please select a part you would like to purchase:" << endl;
                     cin >> compPartsOption;
                     switch(compPartsOption){
-                        case 1:{
+                        case 1:{ //for every item in the lists, display how many, if they are able to purchase that many, and the price
                             cout << "How many CPUs would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
-                            if(p.getnumcpu() + numPartsPurchased > 3){
+                            if(p.getnumcpu() + numPartsPurchased > 3){ //check if they only have 3 at the end of buying the items
                                 cout << "The maximum amount of each computer part you can have at one time is 3." << endl;
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getcpuPrice() * numPartsPurchased > p.getDogecoin()){
+                                if(getcpuPrice() * numPartsPurchased > p.getDogecoin()){ //if they don't have enought to do it
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -242,7 +239,7 @@ void Store::displayMenu(Player &p, int roomNum){
                             }
                             break;
                         }
-                        case 2:{
+                        case 2:{ //buying GPUs, using same format as with CPUs
                             cout << "How many GPUs would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
                             if(p.getNumGpu() + numPartsPurchased > 3){
@@ -262,7 +259,7 @@ void Store::displayMenu(Player &p, int roomNum){
                             }
                             break;
                         }
-                        case 3:{
+                        case 3:{ //Power supplies
                             cout << "How many Power Supply Units would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
                             if(p.getnumPowerSupply() + numPartsPurchased > 3){
@@ -282,7 +279,7 @@ void Store::displayMenu(Player &p, int roomNum){
                             }
                             break;
                         }
-                        case 4:{
+                        case 4:{ //computer cases
                             cout << "How many Computer Cases would you like to purchase?" << endl;
                             cin >> numPartsPurchased;
                             if(p.getnumCases() + numPartsPurchased > 3){
@@ -373,7 +370,7 @@ void Store::displayMenu(Player &p, int roomNum){
                             break;
                         }
                         default:{
-                            cout << "Invalid Input. Computer Parts menu ranges from 1 to 8." << endl;
+                            cout << "Invalid Input. Computer Parts menu ranges from 1 to 8." << endl; //in case the user enters a number not 1 - 8
                             break;
                         }
                     }
@@ -383,7 +380,7 @@ void Store::displayMenu(Player &p, int roomNum){
                 while(p.getDogecoin() > 0 && compPartsOption != 8);
                 break;
             }
-            case 2:{
+            case 2:{ //when buying antivirus USB sticks
                 cout << "One USB stick of antivirus software costs " << getAntivirusPrice() << " Dogecoins and will" << endl;
                 cout << "give you a one-time use to get rid of any viruses on your computer." << endl;
                 cout << "How many antivirus USB sticks would you like to purchase?" << endl;
@@ -392,12 +389,11 @@ void Store::displayMenu(Player &p, int roomNum){
                 totalSpent += numPartsPurchased * getAntivirusPrice();
                 totalDogecoins -= numPartsPurchased * getAntivirusPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;
-                // cout << totalDogecoins << endl;
                 p.setDogecoins(totalDogecoins);
                 break;
             }
-            case 3:{
-                cout << "A VPN costs " << getvpnPrice() << " Dogecoins each. VPNs reduce your chances of getting hacked by" << endl;
+            case 3:{ //buying VPNS
+                cout << "A VPN costs " << getvpnPrice() << " Dogecoins each. VPNs reduce your chances of getting hacked by" << endl; 
                 cout << "preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs." << endl;
                 cout << "How many VPNs would you like to purchase?" << endl;
                 cin >> numPartsPurchased;
@@ -405,11 +401,10 @@ void Store::displayMenu(Player &p, int roomNum){
                 totalSpent += numPartsPurchased * getvpnPrice();
                 totalDogecoins -= numPartsPurchased * getvpnPrice();
                 cout << "Total cost of items so far: " << totalSpent << endl;
-                // cout << totalDogecoins << endl;
                 p.setDogecoins(totalDogecoins);
                 break;
             }
-            case 4:{ //need to fix internet price
+            case 4:{ //When buying IP level
                 int level;
                 setBaseInternetPrice(2);
                 setPrices(roomNum);
@@ -436,8 +431,9 @@ void Store::displayMenu(Player &p, int roomNum){
                 p.setDogecoins(totalDogecoins);
                 break;
             }
-            case 5:{
+            case 5:{ //if the user chooses to leave
                 cout << "Thank you for shopping at Best Buy!" << endl;
+                
                 break;
             }
             default:{
@@ -447,6 +443,6 @@ void Store::displayMenu(Player &p, int roomNum){
         }
 
     }
-    while(menuOption != 5);
+    while(menuOption != 5); //end the loop if the user chooses 5
 }
 

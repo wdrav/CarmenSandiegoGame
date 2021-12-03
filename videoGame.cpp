@@ -14,13 +14,13 @@
 using namespace std;
 
 int main(){
-    string playerName;
+    string playerName; //initializing objects
     Store s;
     Game g;
     Map m;
     Npc n;
     Hacker h;
-    g.setAnswers("answers.txt");
+    g.setAnswers("answers.txt"); //setting all of the arrays with the text
     g.setHackers("hackers.txt");
     g.setPuzzles("puzzles.txt");
     //explain concept of the game to player
@@ -60,7 +60,7 @@ int main(){
     // cout << "and they won’t always give you a fair price..." << endl;
     cout << endl;
     s.displayMenu(p, g.getRoom());
-    while(g.getRoom() < 7){ //possibly adjust
+    while(g.getRoom() < 7){
         g.newRoom(m, p, n, s);
         g.displayStats(p);
         cout << endl;
