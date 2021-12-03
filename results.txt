@@ -1,6 +1,8 @@
 Hello, 0
-WillistheBest, 1
+, 0
 Fred, 1
+Hallo, 1
+WillistheBest, 1
 Hank, 3
 Tommy, 5
 Pratyush, 5
