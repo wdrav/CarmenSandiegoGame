@@ -62,8 +62,6 @@ int main(){
     s.displayMenu(p, g.getRoom());
     while(g.getRoom() < 7){
         g.newRoom(m, p, n, s);
-        g.displayStats(p);
         cout << endl;
-        g.openMenu(m, p, n, s);
     }
 }

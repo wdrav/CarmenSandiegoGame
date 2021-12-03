@@ -86,7 +86,6 @@ int Game::getPlayerScore(Player p){
 void Game::repairComputer(Player &p){
     int option;
     int numPart = 0;
-    int count = 0;
     if(p.getMaintenance() >= 100){ //check if the player doesn't need repair
         cout << "Your computer does not need repair! Yet..." << endl;
         turn--; //decreases the turn as the player couldn't do anything
@@ -105,7 +104,6 @@ void Game::repairComputer(Player &p){
             cout << "6 - Keyboard and Mouse: " << p.getnumKeyboardAndMouse() << endl;
             cout << "Enter the number of the computer part you would like to use. Press 7 to end repair." << endl;
             cin >> option;
-            count += numPart; //
             switch(option){ //switch statement for which part the user has picked
                 case 1:{ //pretty basic rubric for all of the cases
                     if(p.getnumcpu() > 0){
@@ -116,7 +114,7 @@ void Game::repairComputer(Player &p){
                         }
                         else{
                             p.subNumcpu(numPart); //remove that many parts from the cpu
-
+                            p.addMaintenance(20 * numPart); //increase the maintenance to the player
                         }
                     }
                     else{
@@ -133,6 +131,7 @@ void Game::repairComputer(Player &p){
                         }
                         else{
                             p.subNumgpu(numPart);
+                            p.addMaintenance(20 * numPart); //increase the maintenance to the player
                         }
                     }
                     else{
@@ -149,6 +148,7 @@ void Game::repairComputer(Player &p){
                         }
                         else{
                             p.subNumPowerSupply(numPart);
+                            p.addMaintenance(20 * numPart); //increase the maintenance to the player
                         }
                     }
                     else{
@@ -165,6 +165,7 @@ void Game::repairComputer(Player &p){
                         }
                         else{
                             p.subNumCases(numPart);
+                            p.addMaintenance(20 * numPart); //increase the maintenance to the player
                         }
                     }
                     else{
@@ -181,6 +182,7 @@ void Game::repairComputer(Player &p){
                         }
                         else{
                             p.subNumInternetCard(numPart);
+                            p.addMaintenance(20 * numPart); //increase the maintenance to the player
                         }
                     }
                     else{
@@ -197,6 +199,7 @@ void Game::repairComputer(Player &p){
                         }
                         else{
                             p.subNumKeyboardAndMouse(numPart);
+                            p.addMaintenance(20 * numPart); //increase the maintenance to the player
                         }
                     }
                     else{
@@ -205,7 +208,6 @@ void Game::repairComputer(Player &p){
                     break;
                 }
                 case 7:{
-                    p.addMaintenance(20 * count); //increase the maintenance to the player
                     cout << "You have successfully exited the computer repair process. Your computer's maintenance level is currently at " << p.getMaintenance() << "." << endl;
                     break;
                 }
@@ -215,7 +217,7 @@ void Game::repairComputer(Player &p){
                 }
             }
         }
-        while(p.getMaintenance() < 100 && count < 5 && option != 7); //check if count is necessary
+        while(p.getMaintenance() < 100 && option != 7); 
         cout << "You have repaired your computer to a maintenance level of " << p.getMaintenance() << "!" << endl;
     }
 }
@@ -260,6 +262,155 @@ void Game::displayStats(Player &p){
 
 */
 
+// void Game::misfortune(Player &p){
+//     bool misfortune = false;
+
+//     int i = rand() % 10; //get a random number
+
+//     if(i <= 2){ //if it is 0, 1, or 2
+//         misfortune = true;
+//     }else{
+//         misfortune = false;
+//     }
+    
+
+//     if(misfortune){
+//         if(i == 0){
+//             //robbed of a computer part
+//             cout << "OH NO! Your team was robbed by Carmen’s dastardly hackers!" << endl;
+
+//             bool foundPart = false;
+//             int randpart = 0;
+//             int count = 0;
+//             int used[] = {0,0,0,0,0,0,0,0};
+
+//             while(!foundPart){ //method found in Player.cpp fightHacker Methd; described there
+//                 randpart = rand() % 6;
+                
+//                 if(randpart == 0){
+//                     if(used[0] == 1){
+//                         continue;
+//                     }
+
+//                     used[0] = 1;
+
+//                     if(p.getNumGpu() > 0){
+//                         p.addNumgpu(-1);
+//                         cout << "You lost a GPU!" << endl;
+//                         foundPart = true;
+//                     }
+
+
+//                 }else if(randpart == 1){
+//                     if(used[1] == 1){
+//                         continue;
+//                     }
+
+//                     used[1] = 1;
+
+//                     if(p.getnumcpu() > 0){
+//                         p.addNumcpu(-1);
+//                         cout << "You lost a CPU!" << endl;
+//                         foundPart = true;
+//                     }
+                    
+//                 }else if(randpart == 2){
+//                     if(used[2] == 1){
+//                         continue;
+//                     }
+
+//                     used[2] = 1;
+
+//                     if(p.getnumPowerSupply() > 0){
+//                         p.addNumPowerSupply(-1);
+//                         cout << "You lost a Power supply!" << endl;
+//                         foundPart = true;
+//                     }
+
+//                 }else if(randpart == 3){
+//                     if(used[3] == 1){
+//                         continue;
+//                     }
+
+//                     used[3] = 1;
+
+//                     if(p.getnumCases() > 0){
+//                         p.addNumCases(-1);
+//                         cout << "You lost a Case!" << endl;
+//                         foundPart = true;
+//                     }
+
+//                 }else if(randpart == 4){
+//                     if(used[4] == 1){
+//                         continue;
+//                     }
+
+//                     used[4] = 1;
+
+//                     if(p.getnumInternetCard() > 0){
+//                         p.addNumInternetCard(-1);
+//                         cout << "You lost an internet card!" << endl;
+//                         foundPart = true;
+//                     }
+
+//                 }else if(randpart == 5){
+//                     if(used[5] == 1){
+//                         continue;
+//                     }
+
+//                     used[5] = 1;
+
+//                     if(p.getnumKeyboardAndMouse() > 0){
+//                         p.addNumKeyboardAndMouse(-1);
+//                         cout << "You lost a Keyboard and mouse!" << endl;
+//                         foundPart = true;
+//                     }
+
+//                 }
+
+//                 int total = 0;
+                
+//                 for(int i = 0; i < 6; i++){
+//                     total += used[i];
+//                 }
+
+//                 if(total == 5){
+//                     cout << "You have no computer parts left!" << endl;
+//                     i = 1;
+//                     break;
+//                 }
+//             }
+            
+//         }else if(i == 1){ //damaged computer misfortune
+//             cout << "OH NO! Your computer was damaged!" << endl; 
+//             p.subMaintenance(p.getMaintenance() - 10); //set maintenance to 10
+//             if(p.getMaintenance() <= 0){ //check if the player has lost the game
+//                 if(p.getComputers() == 1){
+//                     cout << endl << "Your premade computer came to the rescue! Your maintenance is 100 again!" << endl << endl;
+//                     p.addMaintenance(100);
+//                     p.setComputers(0);
+//                 }else{
+//                     cout << "You maintenance level is too low to continue! You lose!" << endl;
+//                     endGame(p); //end the game if maintenance == 0
+//                     return;
+//                 }
+//             }
+            
+//         }else if(i == 2){
+//             cout << "OH NO! Why won't my code work????" << endl;
+//             cout << "Your frustration was increased." << endl; //frustration misfortune
+//             p.setFrustration(p.getFrustration() + 10); //add 10 to frustration
+
+//             if(p.getFrustration() >= 100){ //check if frustration loss
+//                 cout << "OH NO! You have rage quit!" << endl;
+//                 cout << "Looks like you couldn't handle Carmen's hackers." << endl;
+//                 endGame(p); //end the game
+//                 return;
+//             }
+//         }
+//     }
+// }
+
 void Game::misfortune(Player &p){
     bool misfortune = false;
 
@@ -277,111 +428,26 @@ void Game::misfortune(Player &p){
             //robbed of a computer part
             cout << "OH NO! Your team was robbed by Carmen’s dastardly hackers!" << endl;
 
-            bool foundPart = false;
-            int randpart = 0;
-            int count = 0;
-            int used[] = {0,0,0,0,0,0,0,0};
-
-            while(!foundPart){ //method found in Player.cpp fightHacker Methd; described there
-                randpart = rand() % 6;
-                
-                if(randpart == 0){
-                    if(used[0] == 1){
-                        continue;
-                    }
-
-                    used[0] = 1;
-
-                    if(p.getNumGpu() > 0){
-                        p.addNumgpu(-1);
-                        cout << "You lost a GPU!" << endl;
-                        foundPart = true;
-                    }
-
-
-                }else if(randpart == 1){
-                    if(used[1] == 1){
-                        continue;
-                    }
-
-                    used[1] = 1;
-
-                    if(p.getnumcpu() > 0){
-                        p.addNumcpu(-1);
-                        cout << "You lost a CPU!" << endl;
-                        foundPart = true;
-                    }
-                    
-                }else if(randpart == 2){
-                    if(used[2] == 1){
-                        continue;
-                    }
-
-                    used[2] = 1;
-
-                    if(p.getnumPowerSupply() > 0){
-                        p.addNumPowerSupply(-1);
-                        cout << "You lost a Power supply!" << endl;
-                        foundPart = true;
-                    }
-
-                }else if(randpart == 3){
-                    if(used[3] == 1){
-                        continue;
-                    }
-
-                    used[3] = 1;
-
-                    if(p.getnumCases() > 0){
-                        p.addNumCases(-1);
-                        cout << "You lost a Case!" << endl;
-                        foundPart = true;
-                    }
-
-                }else if(randpart == 4){
-                    if(used[4] == 1){
-                        continue;
-                    }
-
-                    used[4] = 1;
-
-                    if(p.getnumInternetCard() > 0){
-                        p.addNumInternetCard(-1);
-                        cout << "You lost an internet card!" << endl;
-                        foundPart = true;
-                    }
-
-                }else if(randpart == 5){
-                    if(used[5] == 1){
-                        continue;
-                    }
-
-                    used[5] = 1;
-
-                    if(p.getnumKeyboardAndMouse() > 0){
-                        p.addNumKeyboardAndMouse(-1);
-                        cout << "You lost a Keyboard and mouse!" << endl;
-                        foundPart = true;
-                    }
-
-                }
-
-                int total = 0;
-                
-                for(int i = 0; i < 6; i++){
-                    total += used[i];
-                }
-
-                if(total == 5){
-                    cout << "You have no computer parts left!" << endl;
-                    i = 1;
-                    break;
-                }
+            int randRobbed = rand() % 2;
+            if(randRobbed == 0){
+                //set all computer parts to 0
+                p.subNumcpu(p.getnumcpu());
+                p.subNumgpu(p.getNumGpu());
+                p.subNumPowerSupply(p.getnumPowerSupply());
+                p.subNumCases(p.getnumCases());
+                p.subNumInternetCard(p.getnumInternetCard());
+                p.subNumKeyboardAndMouse(p.getnumKeyboardAndMouse());
+                cout << "You have no computer parts left!" << endl;
+            }
+            if(randRobbed == 1){
+                p.addNumUSBstick(0 - p.getnumUSB()); //set number of antivirus to 0
+                cout << "You have no antivirus software left!" << endl;
             }
             
         }else if(i == 1){ //damaged computer misfortune
             cout << "OH NO! Your computer was damaged!" << endl; 
-            p.subMaintenance(10); //subtract 10 maintenance
+            cout << "Your maintenance level has decreased to 10." << endl;
+            p.subMaintenance(p.getMaintenance() - 10); //set maintenance to 10
             if(p.getMaintenance() <= 0){ //check if the player has lost the game
                 if(p.getComputers() == 1){
                     cout << endl << "Your premade computer came to the rescue! Your maintenance is 100 again!" << endl << endl;
@@ -395,7 +461,8 @@ void Game::misfortune(Player &p){
             }
             
         }else if(i == 2){
-            cout << "OH NO! Why won't my code work????" << endl; //frustration misfortune
+            cout << "OH NO! Why won't my code work????" << endl;
+            cout << "Your frustration was increased by 10." << endl; //frustration misfortune
             p.setFrustration(p.getFrustration() + 10); //add 10 to frustration
 
             if(p.getFrustration() >= 100){ //check if frustration loss
@@ -943,6 +1010,8 @@ void Game::newRoom(Map &m, Player &p, Npc n, Store &s){
     }
 
     cout << endl << endl <<"Welcome to room " << room << "!" << endl;
+    cout << "Here is your current progress: " << endl;
+    displayStats(p);
     cout << "Best of luck! You're going to need it..." << endl << endl;
 
     for(int i = 0; i < 6; i++){ //reset the visited NPCs array
@@ -1016,6 +1085,7 @@ void Game::newRoom(Map &m, Player &p, Npc n, Store &s){
 
 void Game::nextTurn(Map &m, Player &p, Npc n, Store s){
     turn++; //add to the turn variable
+    misfortune(p); //check to see if misfortune occurs
     p.setDogecoins(p.getDogecoin() + 5); //add 5 doge
     int num = 5;
     for(int i = 0; i < p.getNumGpu(); i++){ //for every gpu add 5
@@ -1099,7 +1169,6 @@ void Game::travelRoom(Map &m, Player &p, Npc n, Store s){
             endGame(p);
             return;
         }
-        misfortune(p); //check to see if misfortune
         if(m.isHackerLocation()){ //check to see if it is a hacker location
             // fight a hacker
             cout << "You have run into a hacker!!!" << endl;

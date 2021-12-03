@@ -177,7 +177,7 @@ void Store::setPrices(int roomNum){
 void Store::displayMenu(Player &p, int roomNum){
     setPrices(roomNum);
     int menuOption = 0;
-    int totalSpent = 0;
+    double totalSpent = 0;
     int numPartsPurchased = 0;
     double totalDogecoins = p.getDogecoin();
     cout << "You have " << p.getDogecoin() << " dogecoins, " << 
