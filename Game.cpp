@@ -367,9 +367,15 @@ void Game::misfortune(Player &p){
             cout << "OH NO! Your computer was damaged!" << endl;
             p.subMaintenance(10);
             if(p.getMaintenance() <= 0){
-                cout << "You maintenance level is too low to continue! You lose!" << endl;
-                endGame(p);
-                return;
+                if(p.getComputers() == 1){
+                    cout << endl << "Your premade computer came to the rescue! Your maintenance is 100 again!" << endl << endl;
+                    p.addMaintenance(100);
+                    p.setComputers(0);
+                }else{
+                    cout << "You maintenance level is too low to continue! You lose!" << endl;
+                    endGame(p);
+                    return;
+                }
             }
             
         }else if(i == 2){
@@ -1059,9 +1065,15 @@ void Game::travelRoom(Map &m, Player &p, Npc n, Store s){
                 }
 
                 if(p.getMaintenance() <=0){
-                    cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
-                    endGame(p);
-                    return;
+                    if(p.getComputers() == 1){
+                        cout << endl << "Your premade computer came to the rescue! Your maintenance is 100 again!" << endl << endl;
+                        p.addMaintenance(100);
+                        p.setComputers(0);
+                    }else{
+                        cout << "Because of your maintenance level dropping, you have lost the game! Better luck next time!" << endl;
+                        endGame(p);
+                        return;
+                    }
                 }
                 if(result == false){
                     progressLevel += 25;
