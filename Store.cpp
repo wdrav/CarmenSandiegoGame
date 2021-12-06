@@ -227,7 +227,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getcpuPrice() * numPartsPurchased > p.getDogecoin()){ //if they don't have enought to do it
+                                if(getcpuPrice() * numPartsPurchased  > p.getDogecoin()){ //if they don't have enough to do it
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -235,6 +235,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                     totalSpent += numPartsPurchased * getcpuPrice();
                                     totalDogecoins -= numPartsPurchased * getcpuPrice();
                                     cout << "Total cost of items so far: " << totalSpent << endl;
+                                    numPartsPurchased = 0;
                                 }
                             }
                             break;
@@ -247,7 +248,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getgpuPrice() * numPartsPurchased > p.getDogecoin()){
+                                if((getgpuPrice() * numPartsPurchased) > p.getDogecoin()){
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -255,6 +256,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                     totalSpent += numPartsPurchased * getgpuPrice();
                                     totalDogecoins -= numPartsPurchased * getgpuPrice();
                                     cout << "Total cost of items so far: " << totalSpent << endl;
+                                    numPartsPurchased = 0;
                                 }
                             }
                             break;
@@ -267,7 +269,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getPowerSupplyPrice() * numPartsPurchased > p.getDogecoin()){
+                                if((getPowerSupplyPrice() * numPartsPurchased) > p.getDogecoin()){
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -275,6 +277,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                     totalSpent += numPartsPurchased * getPowerSupplyPrice();
                                     totalDogecoins -= numPartsPurchased * getPowerSupplyPrice();
                                     cout << "Total cost of items so far: " << totalSpent << endl;
+                                    numPartsPurchased = 0;
                                 }
                             }
                             break;
@@ -287,7 +290,8 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getComputerCasePrice() * numPartsPurchased > p.getDogecoin()){
+                                if((getComputerCasePrice() * numPartsPurchased) > p.getDogecoin()){
+                                    cout << p.getDogecoin() << ", " << (getComputerCasePrice() * numPartsPurchased) + totalSpent << endl;
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -295,6 +299,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                     totalSpent += numPartsPurchased * getComputerCasePrice();
                                     totalDogecoins -= numPartsPurchased * getComputerCasePrice();
                                     cout << "Total cost of items so far: " << totalSpent << endl;
+                                    numPartsPurchased = 0;
                                 }
                             }
                             break;
@@ -307,7 +312,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getInternetCardPrice() * numPartsPurchased > p.getDogecoin()){
+                                if((getInternetCardPrice() * numPartsPurchased) > p.getDogecoin()){
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -315,6 +320,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                     totalSpent += numPartsPurchased * getInternetCardPrice();
                                     totalDogecoins -= numPartsPurchased * getInternetCardPrice();
                                     cout << "Total cost of items so far: " << totalSpent << endl;
+                                    numPartsPurchased = 0;
                                 }
                             }
                             break;
@@ -327,7 +333,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different number of parts to purchase or select a different part." << endl;
                             }
                             else{
-                                if(getKeyboardAndMousePrice() * numPartsPurchased > p.getDogecoin()){
+                                if((getKeyboardAndMousePrice() * numPartsPurchased) > p.getDogecoin()){
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -335,6 +341,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                     totalSpent += numPartsPurchased * getKeyboardAndMousePrice();
                                     totalDogecoins -= numPartsPurchased * getKeyboardAndMousePrice();
                                     cout << "Total cost of items so far: " << totalSpent << endl;
+                                    numPartsPurchased = 0;
                                 }
                             }
                             break;
@@ -345,7 +352,7 @@ void Store::displayMenu(Player &p, int roomNum){
                                 cout << "Please select a different part to purchase." << endl;
                             }
                             else{
-                                if(getPremadePrice() > p.getDogecoin()){
+                                if(getPremadePrice() + totalSpent > p.getDogecoin()){
                                     cout << "You do not have enough dogecoins to complete this purchase." << endl;
                                 }
                                 else{
@@ -385,6 +392,10 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "give you a one-time use to get rid of any viruses on your computer." << endl;
                 cout << "How many antivirus USB sticks would you like to purchase?" << endl;
                 cin >> numPartsPurchased;
+                if(numPartsPurchased * getAntivirusPrice() > p.getDogecoin()){
+                    cout << "You don't have enough dogecoins for this." << endl;
+                    break;
+                }
                 p.addNumUSBstick(numPartsPurchased);
                 totalSpent += numPartsPurchased * getAntivirusPrice();
                 totalDogecoins -= numPartsPurchased * getAntivirusPrice();
@@ -397,6 +408,10 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "preventing hackers from tracking down your main computer. The increase in security maxes out at 2 VPNs." << endl;
                 cout << "How many VPNs would you like to purchase?" << endl;
                 cin >> numPartsPurchased;
+                if(numPartsPurchased * getvpnPrice() > p.getDogecoin()){
+                    cout << "You don't have enough money for this" << endl;
+                    break;
+                }
                 p.addVPN(numPartsPurchased);
                 totalSpent += numPartsPurchased * getvpnPrice();
                 totalDogecoins -= numPartsPurchased * getvpnPrice();
@@ -422,6 +437,10 @@ void Store::displayMenu(Player &p, int roomNum){
                 cout << "increases your chances of winning a hacker battle. Which internet provider would you like to buy?" << endl;
                 cin >> level;
                 setBaseInternetPrice(level);
+                if(getInternetPrice() > p.getDogecoin()){
+                    cout << "You don't have enough money for that!" << endl;
+                    break;
+                }
                 p.setIPlvl(level);
                 setPrices(roomNum);
                 totalSpent += getInternetPrice();

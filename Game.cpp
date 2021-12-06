@@ -85,6 +85,7 @@ int Game::getPlayerScore(Player p){
 */
 void Game::repairComputer(Player &p){
     int option;
+    string input;
     int numPart = 0;
     if(p.getMaintenance() >= 100){ //check if the player doesn't need repair
         cout << "Your computer does not need repair! Yet..." << endl;
@@ -103,7 +104,14 @@ void Game::repairComputer(Player &p){
             cout << "5 - Internet Card: " << p.getnumInternetCard() << endl;
             cout << "6 - Keyboard and Mouse: " << p.getnumKeyboardAndMouse() << endl;
             cout << "Enter the number of the computer part you would like to use. Press 7 to end repair." << endl;
-            cin >> option;
+            cin >> input;
+            if(isdigit(input[0])){
+                option = stoi(input);
+            }else{
+                cout << "You must enter a number!" << endl;
+                repairComputer(p);
+                return;
+            }
             switch(option){ //switch statement for which part the user has picked
                 case 1:{ //pretty basic rubric for all of the cases
                     if(p.getnumcpu() > 0){
@@ -447,7 +455,7 @@ void Game::misfortune(Player &p){
         }else if(i == 1){ //damaged computer misfortune
             cout << "OH NO! Your computer was damaged!" << endl; 
             cout << "Your maintenance level has decreased to 10." << endl;
-            p.subMaintenance(p.getMaintenance() - 10); //set maintenance to 10
+            p.subMaintenance(10); //set maintenance down 10
             if(p.getMaintenance() <= 0){ //check if the player has lost the game
                 if(p.getComputers() == 1){
                     cout << endl << "Your premade computer came to the rescue! Your maintenance is 100 again!" << endl << endl;
@@ -486,7 +494,8 @@ void Game::misfortune(Player &p){
 
 void Game::speakToNpc(Npc n, Player &p){
     
-   int choice;
+   string choice;
+   int option;
    bool correctChoice = true; //bool to go through the loop
 
    cout << "You have found a mysterious person on your travels. " << endl << endl;
@@ -496,8 +505,17 @@ void Game::speakToNpc(Npc n, Player &p){
    cout << "Take your chances: 2" << endl;
    
     while(correctChoice){
+        
         cin >> choice; //take in a choice
-        switch(choice){
+
+        if(isdigit(choice[0])){
+                option = stoi(choice);
+            }else{
+                cout << "You must enter a number!" << endl;
+                speakToNpc(n,p);
+                return;
+            }
+        switch(option){
             case 1: { //if they choose to take in a puzzle
                 string ans; 
 
@@ -721,6 +739,7 @@ void Game::browseStackOverFlow(Player &p){
     
 
     int option;
+    string input;
     bool choice = true;
     cout << "You've chosen to browse Stack Overflow!" << endl;
     cout << "You have two options: " << endl;
@@ -728,7 +747,14 @@ void Game::browseStackOverFlow(Player &p){
     cout << "\t2: Play rock paper scissors" << endl;
     
     while(choice){
-        cin >> option;
+        cin >> input;
+        if(isdigit(input[0])){
+                option = stoi(input);
+            }else{
+                cout << "You must enter a number!" << endl;
+                browseStackOverFlow(p);
+                return;
+            }
         switch(option){ //solving a puzzle implemented in the speaktoNpc function above 
             case 1:{
                 string answer;
